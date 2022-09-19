@@ -1,4 +1,4 @@
-package com.example.wanttofly;
+package com.example.wanttofly.search;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
