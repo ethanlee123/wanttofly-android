@@ -9,6 +9,9 @@ import android.widget.VideoView;
 
 import com.example.wanttofly.R;
 import com.example.wanttofly.onboarding.OnboardingActivity;
+import com.example.wanttofly.search.SearchActivity;
+import com.example.wanttofly.sharedpreferences.UserPreferences;
+import com.example.wanttofly.sharedpreferences.UserPreferencesKeys;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +31,18 @@ public class MainActivity extends AppCompatActivity {
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +
                 R.raw.want_to_fly_dark));
         videoView.setOnCompletionListener(mediaPlayer -> {
-                    startActivity(OnboardingActivity.getIntent(this));
+                    boolean completedOnboarding =
+                            UserPreferences
+                                    .getInstance(this)
+                                    .getBoolean(
+                                            UserPreferencesKeys.IS_ONBOARDING_COMPLETE,
+                                            false);
+
+                    if (completedOnboarding) {
+                        startActivity(SearchActivity.getIntent(this));
+                    } else {
+                        startActivity(OnboardingActivity.getIntent(this));
+                    }
                     finish();
                 }
         );

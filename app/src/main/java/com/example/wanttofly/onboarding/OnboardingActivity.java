@@ -20,8 +20,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.wanttofly.R;
 import com.example.wanttofly.search.SearchActivity;
-
-import org.w3c.dom.Text;
+import com.example.wanttofly.sharedpreferences.UserPreferences;
+import com.example.wanttofly.sharedpreferences.UserPreferencesKeys;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +48,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
     private void setupGetStartedButton() {
         getStartedButton.setOnClickListener(view -> {
+            UserPreferences.getInstance(this).put(UserPreferencesKeys.IS_ONBOARDING_COMPLETE, true);
+
             startActivity(SearchActivity.getIntent(this));
             finish();
         });
