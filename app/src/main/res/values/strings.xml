@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">wanttofly</string>
     <string name="want_to_fly_box_logo">Want to fly box logo</string>
+    <string name="onboarding_slide_1_header">Powerful <b>visualization</b> tools</string>
+    <string name="onboarding_slide_1_subHeader">Easy to understand with user friendly charts and graphs.</string>
+    <string name="onboarding_slide_2_header">Find the <b>best</b> airlines</string>
+    <string name="onboarding_slide_2_subHeader">Search and filter with various parameters to find only the best.</string>
+    <string name="onboarding_slide_3_header"><b>See</b> what others are saying</string>
+    <string name="onboarding_slide_3_subHeader">Make well informed decisions by viewing past and present comments</string>
+
+    <string name="onboarding_guide">onboarding_guide</string>
+    <string name="get_started">Get started</string>
+    <string name="skip_and_see_awesomeness">Skip and see awesomeness</string>
 </resources>

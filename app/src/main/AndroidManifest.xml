@@ -24,7 +24,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".search.SearchActivity"
+            android:theme="@style/Theme.Wanttofly"/>
+        <activity android:name=".onboarding.OnboardingActivity"
+            android:theme="@style/Theme.Wanttofly"/>
     </application>
 
 </manifest>

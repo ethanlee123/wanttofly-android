@@ -8,7 +8,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.wanttofly.R;
-import com.example.wanttofly.search.SearchActivity;
+import com.example.wanttofly.onboarding.OnboardingActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" +
                 R.raw.want_to_fly_dark));
         videoView.setOnCompletionListener(mediaPlayer -> {
-                    startActivity(SearchActivity.getIntent(this));
+                    startActivity(OnboardingActivity.getIntent(this));
                     finish();
                 }
         );
