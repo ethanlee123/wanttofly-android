@@ -44,6 +44,16 @@ public class OnboardingActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         setupGetStartedButton();
+        setupSkipButton();
+    }
+
+    private void setupSkipButton() {
+        skipTextView.setOnClickListener(view -> {
+            UserPreferences.getInstance(this).put(UserPreferencesKeys.IS_ONBOARDING_COMPLETE, true);
+
+            startActivity(SearchActivity.getIntent(this));
+            finish();
+        });
     }
 
     private void setupGetStartedButton() {
