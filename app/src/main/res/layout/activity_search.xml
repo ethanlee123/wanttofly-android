@@ -1,11 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/background_dark_gray"
+    android:paddingStart="@dimen/app_wide_vert_begin_guideline"
+    android:paddingEnd="@dimen/app_wide_vert_end_guideline"
+    android:paddingTop="@dimen/app_wide_horizontal_start_guideline">
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SEARCH ACTIVITY"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white_200"
+        android:textSize="35sp"
+        android:maxLines="1"
+        android:text="@string/visualize_reliability"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/sv_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_search_view"
+        app:queryHint="@string/search_by_flight_number"
+        android:theme="@style/search_view_theme"
+        app:iconifiedByDefault="false" />
+
+    <TextView
+        android:id="@+id/tv_recent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white_200"
+        android:textSize="24sp"
+        android:maxLines="1"
+        android:text="@string/recent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        tools:listitem="@layout/flight_summary_search"
+        tools:itemCount="1"/>
+
+    <TextView
+        android:id="@+id/tv_trending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white_200"
+        android:textSize="24sp"
+        android:maxLines="1"
+        android:text="@string/trending"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_troublemaker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/flight_summary_search"
+        tools:itemCount="1"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

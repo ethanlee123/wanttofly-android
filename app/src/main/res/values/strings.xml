@@ -11,4 +11,11 @@
     <string name="onboarding_guide">onboarding_guide</string>
     <string name="get_started">Get started</string>
     <string name="skip_and_see_awesomeness">Skip and see awesomeness</string>
+
+    <string name="visualize_reliability">Visualize reliability</string>
+    <string name="search_by_flight_number">Search by flight number</string>
+    <string name="recent">Recent</string>
+    <string name="trending">Trending</string>
+    <string name="on_time_capitalized">ON TIME</string>
+
 </resources>

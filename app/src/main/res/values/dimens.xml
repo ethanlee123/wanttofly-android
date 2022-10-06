@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="app_wide_vert_begin_guideline">20dp</dimen>
+    <dimen name="app_wide_vert_end_guideline">20dp</dimen>
+    <dimen name="app_wide_horizontal_start_guideline">40dp</dimen>
 </resources>
