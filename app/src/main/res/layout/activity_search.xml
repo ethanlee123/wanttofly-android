@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/background_dark_gray"
-    android:paddingStart="@dimen/app_wide_vert_begin_guideline"
-    android:paddingEnd="@dimen/app_wide_vert_end_guideline"
-    android:paddingTop="@dimen/app_wide_horizontal_start_guideline">
+    android:background="@color/background_dark_gray">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20sp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="20sp"/>
 
     <TextView
         android:id="@+id/tv_title"
@@ -18,17 +28,31 @@
         android:textColor="@color/white_200"
         android:textSize="35sp"
         android:maxLines="1"
-        android:text="@string/visualize_reliability"/>
+        android:text="@string/visualize_reliability"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_search_bar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/bg_search_view"
         app:queryHint="@string/search_by_flight_number"
         android:theme="@style/search_view_theme"
-        app:iconifiedByDefault="false" />
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintEnd_toStartOf="@id/iv_filter"/>
+
+    <ImageView
+        android:id="@+id/iv_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_filter"
+        android:contentDescription="advanced search icon"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintTop_toTopOf="@id/sv_search_bar" />
 
     <TextView
         android:id="@+id/tv_recent"
@@ -38,7 +62,8 @@
         android:textColor="@color/white_200"
         android:textSize="24sp"
         android:maxLines="1"
-        android:text="@string/recent"/>
+        android:text="@string/recent"
+        app:layout_constraintTop_toBottomOf="@id/sv_search_bar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recent"
@@ -46,7 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         tools:listitem="@layout/flight_summary_search"
-        tools:itemCount="1"/>
+        tools:itemCount="1"
+        app:layout_constraintTop_toBottomOf="@id/tv_recent"/>
 
     <TextView
         android:id="@+id/tv_trending"
@@ -56,13 +82,15 @@
         android:textColor="@color/white_200"
         android:textSize="24sp"
         android:maxLines="1"
-        android:text="@string/trending"/>
+        android:text="@string/trending"
+        app:layout_constraintTop_toBottomOf="@id/rv_recent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_troublemaker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_trending"
         tools:listitem="@layout/flight_summary_search"
         tools:itemCount="1"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
