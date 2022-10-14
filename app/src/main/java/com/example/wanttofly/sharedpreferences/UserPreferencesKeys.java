@@ -13,5 +13,5 @@ public enum UserPreferencesKeys {
      * String: SAMPLE_KEY, SAMPLE_STR or just SAMPLE
      */
 
-    IS_ONBOARDING_COMPLETE;
+    IS_ONBOARDING_COMPLETE
 }

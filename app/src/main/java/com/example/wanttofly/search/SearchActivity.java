@@ -38,9 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setupTestButton() {
-        testButton.setOnClickListener(view -> {
-            startActivity(FlightDetails.getIntent(this));
-        });
+        testButton.setOnClickListener(view -> startActivity(FlightDetails.getIntent(this)));
     }
 
     public static Intent getIntent(Context context) {
