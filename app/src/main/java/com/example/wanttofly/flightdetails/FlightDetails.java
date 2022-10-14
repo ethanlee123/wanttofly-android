@@ -15,3 +15,4 @@ public class FlightDetails extends AppCompatActivity {
         setContentView(R.layout.activity_flight_details);
     }
 }
+
