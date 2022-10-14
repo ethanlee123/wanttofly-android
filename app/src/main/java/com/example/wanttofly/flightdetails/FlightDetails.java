@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wanttofly.R;
-import com.example.wanttofly.search.SearchActivity;
 
 public class FlightDetails extends AppCompatActivity {
 

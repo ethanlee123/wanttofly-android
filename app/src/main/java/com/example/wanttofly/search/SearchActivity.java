@@ -2,14 +2,12 @@ package com.example.wanttofly.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 
 import com.example.wanttofly.R;
 import com.example.wanttofly.advancedsearch.FilterBottomSheetFragment;

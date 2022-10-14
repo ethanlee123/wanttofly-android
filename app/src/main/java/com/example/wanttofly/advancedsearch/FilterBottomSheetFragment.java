@@ -1,7 +1,5 @@
 package com.example.wanttofly.advancedsearch;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.wanttofly.R;
-import com.example.wanttofly.flightdetails.FlightDetails;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
