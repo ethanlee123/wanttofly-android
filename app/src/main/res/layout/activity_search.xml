@@ -86,11 +86,18 @@
         app:layout_constraintTop_toBottomOf="@id/rv_recent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_troublemaker"
+        android:id="@+id/rv_trending"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_trending"
         tools:listitem="@layout/flight_summary_search"
         tools:itemCount="1"/>
+
+    <Button
+        android:id="@+id/b_testing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="mock button for testing"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
