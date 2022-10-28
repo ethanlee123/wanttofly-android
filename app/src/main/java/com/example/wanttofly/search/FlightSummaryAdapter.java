@@ -10,16 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanttofly.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHolder>{
+public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdapter.ViewHolder>{
 
-    List<String> recentsList;
+    List<String> flightSummariesList;
     IOnItemClickListener listener;
-    public RecentsAdapter(List<String> recentsList, IOnItemClickListener listener) {
-        this.recentsList = recentsList;
+    public FlightSummaryAdapter(List<String> flightSummariesList, IOnItemClickListener listener) {
+        this.flightSummariesList = flightSummariesList;
         this.listener = listener;
     }
 
@@ -47,12 +45,12 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.airline.setText(recentsList.get(position));
+        holder.airline.setText(flightSummariesList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return recentsList.size();
+        return flightSummariesList.size();
     }
 
     public interface IOnItemClickListener {

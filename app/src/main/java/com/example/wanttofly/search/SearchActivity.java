@@ -17,7 +17,7 @@ import com.example.wanttofly.flightdetails.FlightDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements RecentsAdapter.IOnItemClickListener {
+public class SearchActivity extends AppCompatActivity implements FlightSummaryAdapter.IOnItemClickListener {
     ImageView filterButton;
     RecyclerView rvRecents;
     RecyclerView rvTrending;
@@ -33,6 +33,24 @@ public class SearchActivity extends AppCompatActivity implements RecentsAdapter.
 
         setupFilterButton();
         setupRecyclerViewRecents();
+        setupRecyclerViewTrending();
+    }
+
+    private void setupRecyclerViewTrending() {
+        List<String> recentsList = new ArrayList<>();
+        recentsList.add("test1");
+        recentsList.add("test2");
+        recentsList.add("test3");
+
+        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(recentsList, this);
+        rvTrending.setLayoutManager(new LinearLayoutManager(this));
+        rvTrending.setAdapter(flightSummaryAdapter);
+
+        rvTrending.addItemDecoration(
+                new MarginItemDecoration(
+                        getResources().getDimensionPixelSize(
+                                R.dimen.flight_summary_view_bottom_margin))
+        );
     }
 
     private void setupRecyclerViewRecents() {
@@ -41,9 +59,9 @@ public class SearchActivity extends AppCompatActivity implements RecentsAdapter.
         recentsList.add("test2");
         recentsList.add("test3");
 
-        RecentsAdapter recentsAdapter = new RecentsAdapter(recentsList, this);
+        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(recentsList, this);
         rvRecents.setLayoutManager(new LinearLayoutManager(this));
-        rvRecents.setAdapter(recentsAdapter);
+        rvRecents.setAdapter(flightSummaryAdapter);
 
         rvRecents.addItemDecoration(
                 new MarginItemDecoration(
