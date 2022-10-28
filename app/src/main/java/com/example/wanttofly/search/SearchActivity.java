@@ -3,7 +3,6 @@ package com.example.wanttofly.search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -18,8 +17,7 @@ import com.example.wanttofly.flightdetails.FlightDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
-    Button testButton;
+public class SearchActivity extends AppCompatActivity implements RecentsAdapter.IOnItemClickListener {
     ImageView filterButton;
     RecyclerView rvRecents;
     RecyclerView rvTrending;
@@ -29,12 +27,10 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        testButton = findViewById(R.id.b_testing);
         filterButton = findViewById(R.id.iv_filter);
         rvRecents = findViewById(R.id.rv_recent);
         rvTrending = findViewById(R.id.rv_trending);
 
-        setupTestButton();
         setupFilterButton();
         setupRecyclerViewRecents();
     }
@@ -45,7 +41,7 @@ public class SearchActivity extends AppCompatActivity {
         recentsList.add("test2");
         recentsList.add("test3");
 
-        RecentsAdapter recentsAdapter = new RecentsAdapter(recentsList);
+        RecentsAdapter recentsAdapter = new RecentsAdapter(recentsList, this);
         rvRecents.setLayoutManager(new LinearLayoutManager(this));
         rvRecents.setAdapter(recentsAdapter);
 
@@ -65,11 +61,12 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void setupTestButton() {
-        testButton.setOnClickListener(view -> startActivity(FlightDetails.getIntent(this)));
-    }
-
     public static Intent getIntent(Context context) {
         return new Intent(context, SearchActivity.class);
+    }
+
+    @Override
+    public void onItemClick() {
+        startActivity(FlightDetails.getIntent(this));
     }
 }

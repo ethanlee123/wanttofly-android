@@ -17,8 +17,10 @@ import java.util.List;
 public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHolder>{
 
     List<String> recentsList;
-    public RecentsAdapter(List<String> recentsList) {
+    IOnItemClickListener listener;
+    public RecentsAdapter(List<String> recentsList, IOnItemClickListener listener) {
         this.recentsList = recentsList;
+        this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -28,7 +30,6 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHold
             super(itemView);
 
             airline = itemView.findViewById(R.id.tv_airline);
-
         }
     }
 
@@ -37,6 +38,8 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.flight_summary_search, parent, false);
+
+        view.setOnClickListener(view1 -> listener.onItemClick());
 
         return new ViewHolder(view);
 
@@ -50,5 +53,9 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHold
     @Override
     public int getItemCount() {
         return recentsList.size();
+    }
+
+    public interface IOnItemClickListener {
+        void onItemClick();
     }
 }
