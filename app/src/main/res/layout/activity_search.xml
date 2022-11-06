@@ -1,103 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background_dark_gray">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/start_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20sp"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/end_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20sp"/>
-
-    <TextView
-        android:id="@+id/tv_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:textColor="@color/white_200"
-        android:textSize="35sp"
-        android:maxLines="1"
-        android:text="@string/visualize_reliability"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:background="@color/background_dark_gray">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/sv_search_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/bg_search_view"
-        app:queryHint="@string/search_by_flight_number"
-        android:theme="@style/search_view_theme"
-        app:iconifiedByDefault="false"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintStart_toStartOf="@id/start_guideline"
-        app:layout_constraintEnd_toStartOf="@id/iv_filter"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20sp" />
 
-    <ImageView
-        android:id="@+id/iv_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_filter"
-        android:contentDescription="advanced search icon"
-        app:layout_constraintEnd_toEndOf="@id/end_guideline"
-        app:layout_constraintTop_toTopOf="@id/sv_search_bar" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20sp" />
 
-    <TextView
-        android:id="@+id/tv_recent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/white_200"
-        android:textSize="24sp"
-        android:maxLines="1"
-        android:text="@string/recent"
-        app:layout_constraintTop_toBottomOf="@id/sv_search_bar"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:maxLines="1"
+            android:text="@string/visualize_reliability"
+            android:textColor="@color/white_200"
+            android:textSize="35sp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_recent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        tools:listitem="@layout/flight_summary_search"
-        tools:itemCount="1"
-        app:layout_constraintTop_toBottomOf="@id/tv_recent"/>
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/sv_search_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/bg_search_view"
+            android:theme="@style/search_view_theme"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toStartOf="@id/iv_filter"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:queryHint="@string/search_by_flight_number" />
 
-    <TextView
-        android:id="@+id/tv_trending"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/white_200"
-        android:textSize="24sp"
-        android:maxLines="1"
-        android:text="@string/trending"
-        app:layout_constraintTop_toBottomOf="@id/rv_recent"/>
+        <ImageView
+            android:id="@+id/iv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/advanced_search_icon"
+            android:src="@drawable/ic_filter"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintTop_toTopOf="@id/sv_search_bar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_trending"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_trending"
-        tools:listitem="@layout/flight_summary_search"
-        tools:itemCount="1"/>
+        <TextView
+            android:id="@+id/tv_recent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:maxLines="1"
+            android:text="@string/recent"
+            android:textColor="@color/white_200"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/sv_search_bar" />
 
-    <Button
-        android:id="@+id/b_testing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="mock button for testing"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/tv_recent"
+            tools:itemCount="1"
+            tools:listitem="@layout/flight_summary_search" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_trending"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:maxLines="1"
+            android:text="@string/trending"
+            android:textColor="@color/white_200"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/rv_recent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_trending"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/tv_trending"
+            tools:itemCount="4"
+            tools:listitem="@layout/flight_summary_search" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

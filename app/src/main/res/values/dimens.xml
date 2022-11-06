@@ -3,4 +3,5 @@
     <dimen name="app_wide_vert_begin_guideline">20dp</dimen>
     <dimen name="app_wide_vert_end_guideline">20dp</dimen>
     <dimen name="app_wide_horizontal_start_guideline">40dp</dimen>
+    <dimen name="flight_summary_view_bottom_margin">15dp</dimen>
 </resources>

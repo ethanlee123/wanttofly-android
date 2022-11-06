@@ -1,7 +1,5 @@
 package com.example.wanttofly.advancedsearch;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.wanttofly.R;
-import com.example.wanttofly.flightdetails.FlightDetails;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
@@ -19,8 +16,6 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_advanced_search, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_advanced_search, container, false);
     }
 }

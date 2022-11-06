@@ -17,5 +17,6 @@
     <string name="recent">Recent</string>
     <string name="trending">Trending</string>
     <string name="on_time_capitalized">ON TIME</string>
+    <string name="advanced_search_icon">advanced search icon</string>
 
 </resources>
