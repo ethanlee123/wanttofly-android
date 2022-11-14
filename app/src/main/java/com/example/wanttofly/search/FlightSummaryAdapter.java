@@ -14,9 +14,10 @@ import java.util.List;
 
 public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdapter.ViewHolder>{
 
-    List<String> flightSummariesList;
+    List<FlightSummaryData> flightSummariesList;
     IOnItemClickListener listener;
-    public FlightSummaryAdapter(List<String> flightSummariesList, IOnItemClickListener listener) {
+
+    public FlightSummaryAdapter(List<FlightSummaryData> flightSummariesList, IOnItemClickListener listener) {
         this.flightSummariesList = flightSummariesList;
         this.listener = listener;
     }
@@ -45,7 +46,7 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.airline.setText(flightSummariesList.get(position));
+        holder.airline.setText(flightSummariesList.get(position).getAirlineName());
     }
 
     @Override
