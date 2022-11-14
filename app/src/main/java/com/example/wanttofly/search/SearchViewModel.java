@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchViewModel extends ViewModel {
+    private final int MAX_FLIGHTS_TO_SHOW = 3;
     private MutableLiveData<List<FlightSummaryData>> trendingFlights;
 
     private final String FLIGHT_LABS_API_KEY = BuildConfig.FLIGHT_LABS_API_KEY;
@@ -97,7 +98,7 @@ public class SearchViewModel extends ViewModel {
         JSONArray jsonArray = new JSONArray(flightData);
         List<FlightSummaryData> data = new ArrayList<>(jsonArray.length());
 
-        for (int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < MAX_FLIGHTS_TO_SHOW; i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
             String flightNumber = jsonObject.getJSONObject("flight").getString("number");

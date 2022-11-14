@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanttofly.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdapter.ViewHolder>{
@@ -24,11 +26,14 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView airline;
+        TextView destination;
+        TextView flightNumber;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             airline = itemView.findViewById(R.id.tv_airline);
+            destination = itemView.findViewById(R.id.tv_destination);
+            flightNumber = itemView.findViewById(R.id.tv_flight_number);
         }
     }
 
@@ -47,6 +52,8 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.airline.setText(flightSummariesList.get(position).getAirlineName());
+        holder.destination.setText(flightSummariesList.get(position).getDestination());
+        holder.flightNumber.setText(flightSummariesList.get(position).getFlightNumber());
     }
 
     @Override
