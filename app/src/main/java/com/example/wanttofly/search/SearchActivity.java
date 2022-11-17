@@ -29,6 +29,7 @@ public class SearchActivity
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_search);
 
         viewModel = new ViewModelProvider(this).get(SearchViewModel.class);
