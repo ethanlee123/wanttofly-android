@@ -1,14 +1,10 @@
 package com.example.wanttofly.search;
 
-import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.wanttofly.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,43 +17,55 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+
 public class SearchViewModel extends ViewModel {
     private final SearchRepository repository = new SearchRepository();
 
     private final int MAX_FLIGHTS_TO_SHOW = 3;
-    private MutableLiveData<List<FlightSummaryData>> trendingFlights = new MutableLiveData<>();
+    private final MutableLiveData<List<FlightSummaryData>> trendingFlights = new MutableLiveData<>();
 
-    public LiveData<List<FlightSummaryData>> getTrendingFlights(Context context) {
-            repository.getFlights();
+    public LiveData<List<FlightSummaryData>> getTrendingFlights(InputStream backupFlightData) {
+        this.getFlights(backupFlightData);
+        return trendingFlights;
+    }
 
-            repository.getTrendingFlights().observe((LifecycleOwner) context, flightSummaryData -> {
-                List<FlightSummaryData> parseJsonResponse = null;
-
-                if (flightSummaryData == null) {
-                    try {
-                        trendingFlights.setValue(this.loadTrending(context));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return;
-                }
-
+    private void getFlights(InputStream backupFlightData) {
+        // disposable that will be used to subscribe
+        DisposableSubscriber<JSONArray> d = new DisposableSubscriber<JSONArray>() {
+            @Override
+            public void onNext(JSONArray jsonArray) {
                 try {
-                    parseJsonResponse = parseJsonResponse(flightSummaryData);
+                    List<FlightSummaryData> parseJsonResponse = parseJsonResponse(jsonArray);
                     trendingFlights.setValue(parseJsonResponse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            });
+            }
 
-        return trendingFlights;
+            @Override
+            public void onError(Throwable t) {
+                trendingFlights.setValue(loadTrending(backupFlightData));
+            }
+
+            @Override
+            public void onComplete() {
+                // do nothing
+            }
+        };
+
+        repository.getFlightsFlowable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(d);
     }
 
-    private List<FlightSummaryData> loadTrending(Context context) throws IOException {
+    private List<FlightSummaryData> loadTrending(InputStream backupFlightData) {
         StringBuilder text = new StringBuilder();
         try {
-            InputStream is = context.getResources().openRawResource(R.raw.sample_data);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(backupFlightData));
             String line;
 
             while ((line = reader.readLine()) != null) {

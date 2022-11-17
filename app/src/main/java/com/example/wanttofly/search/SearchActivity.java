@@ -15,10 +15,10 @@ import com.example.wanttofly.R;
 import com.example.wanttofly.advancedsearch.FilterBottomSheetFragment;
 import com.example.wanttofly.flightdetails.FlightDetails;
 
+import java.io.InputStream;
 import java.util.List;
 
-public class SearchActivity
-        extends AppCompatActivity
+public class SearchActivity extends AppCompatActivity
         implements FlightSummaryAdapter.IOnItemClickListener {
     ImageView filterButton;
     RecyclerView rvRecents;
@@ -29,20 +29,25 @@ public class SearchActivity
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_search);
 
         viewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        viewModel.getTrendingFlights(this).observe(this, flightSummaryData -> {
-            setupRecyclerViewTrending(flightSummaryData);
-            setupRecyclerViewRecents(flightSummaryData);
-        });
+        setupObservers();
 
         filterButton = findViewById(R.id.iv_filter);
         rvRecents = findViewById(R.id.rv_recent);
         rvTrending = findViewById(R.id.rv_trending);
 
         setupFilterButton();
+    }
+
+    private void setupObservers() {
+        InputStream is = getBaseContext().getResources().openRawResource(R.raw.sample_data);
+
+        viewModel.getTrendingFlights(is).observe(this, flightSummaryData -> {
+            setupRecyclerViewTrending(flightSummaryData);
+            setupRecyclerViewRecents(flightSummaryData);
+        });
     }
 
     private void setupRecyclerViewTrending(List<FlightSummaryData> trendingFlights) {
