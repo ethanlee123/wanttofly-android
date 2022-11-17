@@ -45,7 +45,11 @@ public class SearchActivity
     }
 
     private void setupRecyclerViewTrending(List<FlightSummaryData> trendingFlights) {
-        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(trendingFlights, this);
+        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(
+                getBaseContext(),
+                trendingFlights,
+                this
+        );
         rvTrending.setLayoutManager(new LinearLayoutManager(this));
         rvTrending.setAdapter(flightSummaryAdapter);
 
@@ -57,7 +61,11 @@ public class SearchActivity
     }
 
     private void setupRecyclerViewRecents(List<FlightSummaryData> trendingFlights) {
-        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(trendingFlights, this);
+        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(
+                getBaseContext(),
+                trendingFlights,
+                this
+        );
         rvRecents.setLayoutManager(new LinearLayoutManager(this));
         rvRecents.setAdapter(flightSummaryAdapter);
 

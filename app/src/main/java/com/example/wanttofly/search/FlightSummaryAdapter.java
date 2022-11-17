@@ -1,5 +1,6 @@
 package com.example.wanttofly.search;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,12 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
     List<FlightSummaryData> flightSummariesList;
     IOnItemClickListener listener;
+    Context context;
 
-    public FlightSummaryAdapter(List<FlightSummaryData> flightSummariesList, IOnItemClickListener listener) {
+    public FlightSummaryAdapter(Context context,
+                                List<FlightSummaryData> flightSummariesList,
+                                IOnItemClickListener listener) {
+        this.context = context;
         this.flightSummariesList = flightSummariesList;
         this.listener = listener;
     }
@@ -53,7 +58,9 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.airline.setText(flightSummariesList.get(position).getAirlineName());
         holder.destination.setText(flightSummariesList.get(position).getDestination());
-        holder.flightNumber.setText(flightSummariesList.get(position).getFlightNumber());
+        String flightNum = context.getString(R.string.hashtag)
+                + flightSummariesList.get(position).getFlightNumber();
+        holder.flightNumber.setText(flightNum);
     }
 
     @Override
