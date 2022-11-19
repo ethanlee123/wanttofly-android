@@ -1,6 +1,7 @@
 package com.example.wanttofly.search;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanttofly.R;
+
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,12 +36,18 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
         TextView airline;
         TextView destination;
         TextView flightNumber;
+        PieChart pieChart;
+        TextView flightStatus;
+        TextView flightRating;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            pieChart = itemView.findViewById(R.id.pie_chart);
             airline = itemView.findViewById(R.id.tv_airline);
             destination = itemView.findViewById(R.id.tv_destination);
             flightNumber = itemView.findViewById(R.id.tv_flight_number);
+            flightStatus = itemView.findViewById(R.id.tv_status);
+            flightRating = itemView.findViewById(R.id.tv_flight_score);
         }
     }
 
@@ -55,11 +65,22 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        int flightRating = flightSummariesList.get(position).getFlightRating();
+        holder.pieChart.clearChart(); // need to clear otherwise the pie slices will stack
+
+        holder.pieChart.addPieSlice(new PieModel("", flightRating,
+                Color.parseColor("#FE6DA8")));
+        holder.pieChart.addPieSlice(new PieModel("", 100-flightRating,
+                Color.parseColor("#56B7F1")));
+        holder.flightRating.setText(String.valueOf(flightRating));
+
         holder.airline.setText(flightSummariesList.get(position).getAirlineName());
         holder.destination.setText(flightSummariesList.get(position).getArrivalAirport());
         String flightNum = context.getString(R.string.hashtag)
                 + flightSummariesList.get(position).getFlightNumber();
         holder.flightNumber.setText(flightNum);
+
+        holder.pieChart.startAnimation();
     }
 
     @Override
