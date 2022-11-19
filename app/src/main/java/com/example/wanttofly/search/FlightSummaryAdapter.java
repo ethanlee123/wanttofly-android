@@ -1,5 +1,7 @@
 package com.example.wanttofly.search;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +12,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanttofly.R;
 
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
+
+import java.util.Collection;
 import java.util.List;
 
 public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdapter.ViewHolder>{
 
-    List<String> flightSummariesList;
+    List<FlightSummaryData> flightSummariesList;
     IOnItemClickListener listener;
-    public FlightSummaryAdapter(List<String> flightSummariesList, IOnItemClickListener listener) {
-        this.flightSummariesList = flightSummariesList;
+    Context context;
+
+    public FlightSummaryAdapter(Context context,
+                                Collection<FlightSummaryData> flightSummariesList,
+                                IOnItemClickListener listener) {
+        this.context = context;
+        this.flightSummariesList = (List<FlightSummaryData>) flightSummariesList;
         this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView airline;
+        TextView destination;
+        TextView flightNumber;
+        PieChart pieChart;
+        TextView flightStatus;
+        TextView flightRating;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            pieChart = itemView.findViewById(R.id.pie_chart);
             airline = itemView.findViewById(R.id.tv_airline);
+            destination = itemView.findViewById(R.id.tv_destination);
+            flightNumber = itemView.findViewById(R.id.tv_flight_number);
+            flightStatus = itemView.findViewById(R.id.tv_status);
+            flightRating = itemView.findViewById(R.id.tv_flight_score);
         }
     }
 
@@ -45,12 +65,37 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.airline.setText(flightSummariesList.get(position));
+        int flightRating = flightSummariesList.get(position).getFlightRating();
+        holder.pieChart.clearChart(); // need to clear otherwise the pie slices will stack
+
+        holder.pieChart.addPieSlice(new PieModel("", flightRating,
+                Color.parseColor("#FE6DA8")));
+        holder.pieChart.addPieSlice(new PieModel("", 100-flightRating,
+                Color.parseColor("#56B7F1")));
+        holder.flightRating.setText(String.valueOf(flightRating));
+
+        holder.airline.setText(flightSummariesList.get(position).getAirlineName());
+        holder.destination.setText(flightSummariesList.get(position).getArrivalAirport());
+        String flightNum = context.getString(R.string.hashtag)
+                + flightSummariesList.get(position).getFlightNumber();
+        holder.flightNumber.setText(flightNum);
+
+        holder.pieChart.startAnimation();
     }
 
     @Override
     public int getItemCount() {
         return flightSummariesList.size();
+    }
+
+    /**
+     * Better way of update data set, search DiffUtil
+     * @param newData
+     */
+    public void updateData(List<FlightSummaryData> newData) {
+        flightSummariesList.clear();
+        flightSummariesList.addAll(newData);
+        notifyDataSetChanged();
     }
 
     public interface IOnItemClickListener {

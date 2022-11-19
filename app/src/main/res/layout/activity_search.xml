@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_dark_gray">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background_dark_gray">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start_guideline"
@@ -32,6 +32,7 @@
             android:layout_marginBottom="20dp"
             android:maxLines="1"
             android:text="@string/visualize_reliability"
+            style="@style/header"
             android:textColor="@color/white_200"
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -42,7 +43,7 @@
             android:id="@+id/sv_search_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/bg_search_view"
             android:theme="@style/search_view_theme"
@@ -79,7 +80,6 @@
             android:id="@+id/rv_recent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -105,12 +105,32 @@
             android:id="@+id/rv_trending"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@id/tv_trending"
             tools:itemCount="4"
             tools:listitem="@layout/flight_summary_search" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_searches"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/sv_search_bar" />
+
+        <include
+            android:id="@+id/layout_no_results_found"
+            layout="@layout/no_results_found"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/sv_search_bar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

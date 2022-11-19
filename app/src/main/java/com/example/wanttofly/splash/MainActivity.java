@@ -8,6 +8,7 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.wanttofly.R;
+import com.example.wanttofly.network.VolleySingleton;
 import com.example.wanttofly.onboarding.OnboardingActivity;
 import com.example.wanttofly.search.SearchActivity;
 import com.example.wanttofly.sharedpreferences.UserPreferences;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         playSplashScreenVideo();
+
+        // Instantiate an instance of VolleySingleton ASAP to make network requests
+        VolleySingleton.getInstance(getApplicationContext());
     }
 
     private void playSplashScreenVideo() {

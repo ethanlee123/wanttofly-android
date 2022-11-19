@@ -19,4 +19,8 @@
     <string name="on_time_capitalized">ON TIME</string>
     <string name="advanced_search_icon">advanced search icon</string>
 
+    <string name="hashtag">#</string>
+    <string name="no_results_found">No results found</string>
+    <string name="try_searching_again">Try searching again</string>
+
 </resources>
