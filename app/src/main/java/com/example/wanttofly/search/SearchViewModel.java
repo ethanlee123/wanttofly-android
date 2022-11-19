@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -24,17 +25,24 @@ import io.reactivex.subscribers.DisposableSubscriber;
 public class SearchViewModel extends ViewModel {
     private final SearchRepository repository = new SearchRepository();
 
-    private final int MAX_FLIGHTS_TO_SHOW = 3;
+    private SearchTrie searchTrie = new SearchTrie();
+
     private final MutableLiveData<List<FlightSummaryData>> trendingFlights = new MutableLiveData<>();
-//    private final MutableLiveData<List<FlightSummaryData>> allFlights = new MutableLiveData<>();
 
     public LiveData<List<FlightSummaryData>> getTrendingFlights(InputStream backupFlightData) {
-        this.getFlights(backupFlightData);
+        if (trendingFlights.getValue() == null) {
+            this.getFlights(backupFlightData);
+        }
         return trendingFlights;
     }
 
+    private void buildSearchTrie(List<FlightSummaryData> flights) {
+        for (int i = 0; i < flights.size(); i++) {
+            searchTrie.insert(flights.get(i), i);
+        }
+    }
+
     private void getFlights(InputStream backupFlightData) {
-        // disposable that will be used to subscribe
         DisposableSubscriber<JSONArray> d = new DisposableSubscriber<JSONArray>() {
             @Override
             public void onNext(JSONArray jsonArray) {
@@ -42,9 +50,7 @@ public class SearchViewModel extends ViewModel {
                     List<FlightSummaryData> parseJsonResponse = parseJsonResponse(jsonArray);
                     trendingFlights.setValue(parseJsonResponse);
 
-                    // set all Flights to same as trending flights
-                    // if time permits separate this logic
-//                    allFlights.setValue(parseJsonResponse);
+                    buildSearchTrie(parseJsonResponse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -52,7 +58,9 @@ public class SearchViewModel extends ViewModel {
 
             @Override
             public void onError(Throwable t) {
-                trendingFlights.setValue(loadTrending(backupFlightData));
+                List<FlightSummaryData> data = loadTrending(backupFlightData);
+                trendingFlights.setValue(data);
+                buildSearchTrie(data);
             }
 
             @Override
@@ -67,12 +75,31 @@ public class SearchViewModel extends ViewModel {
                 .subscribe(d);
     }
 
+    /**
+     * Currently trending flights is the list being searched. Trending flights is created from
+     * sample data due to limited API calls. If API is activated, buildSearchTrie() needs minor
+     * refactor as well as this for loop
+     * @param searchString
+     * @return
+     */
     public List<FlightSummaryData> searchFlight(String searchString) {
-        if (searchString.length() < 3) {
-            return null;
-        }
+        SearchTrie node = searchTrie.search(searchString);
+        List<FlightSummaryData> results = new ArrayList<>(5);
 
-        return trendingFlights.getValue().subList(1, 4);
+        if (node != null) {
+            Set<Integer> indexes = node.getIndexes();
+            // Used to limit the number of results displayed
+            int MAX_RESULTS_RETURN = 8;
+            int count = 0;
+            for (int i: indexes) {
+                results.add(trendingFlights.getValue().get(i));
+                count++;
+                if (count >= MAX_RESULTS_RETURN) {
+                    break;
+                }
+            }
+        }
+        return results;
     }
 
 

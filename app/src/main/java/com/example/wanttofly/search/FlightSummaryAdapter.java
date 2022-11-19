@@ -56,7 +56,7 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.airline.setText(flightSummariesList.get(position).getAirlineName());
-        holder.destination.setText(flightSummariesList.get(position).getDestination());
+        holder.destination.setText(flightSummariesList.get(position).getArrivalAirport());
         String flightNum = context.getString(R.string.hashtag)
                 + flightSummariesList.get(position).getFlightNumber();
         holder.flightNumber.setText(flightNum);
@@ -67,6 +67,10 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
         return flightSummariesList.size();
     }
 
+    /**
+     * Better way of update data set, search DiffUtil
+     * @param newData
+     */
     public void updateData(List<FlightSummaryData> newData) {
         flightSummariesList.clear();
         flightSummariesList.addAll(newData);

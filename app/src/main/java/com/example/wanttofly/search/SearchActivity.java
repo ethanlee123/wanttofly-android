@@ -87,6 +87,7 @@ public class SearchActivity extends AppCompatActivity
                 if (results != null) {
                     setSearchRecyclerView(View.VISIBLE);
                     searchesAdapter.updateData(results);
+                    return true;
                 }
                 return false;
             }

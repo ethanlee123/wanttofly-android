@@ -6,16 +6,19 @@ public class FlightSummaryData {
     String flightStatus = "On Time";
     int flightRating;
     String airlineName;
-    String destination;
+    String arrivalAirport;
     String flightNumber;
 
     int low = 60;
     int high = 100;
 
-    public FlightSummaryData(int rating, String airlineName, String destination, String flightNumber){
+    public FlightSummaryData(int rating,
+                             String airlineName,
+                             String arrivalAirport,
+                             String flightNumber) {
         this.flightRating = randomNumber();
         this.airlineName = airlineName;
-        this.destination = destination;
+        this.arrivalAirport = arrivalAirport;
         this.flightNumber = flightNumber;
     }
 
@@ -36,8 +39,8 @@ public class FlightSummaryData {
         this.airlineName = airlineName;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setArrivalAirport(String arrivalAirport) {
+        this.arrivalAirport = arrivalAirport;
     }
 
     public void setFlightNumber(String flightNumber) {
@@ -52,8 +55,8 @@ public class FlightSummaryData {
         return this.flightStatus;
     }
 
-    public String getDestination() {
-        return this.destination;
+    public String getArrivalAirport() {
+        return this.arrivalAirport;
     }
 
     public String getFlightNumber() {
