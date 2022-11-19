@@ -26,6 +26,7 @@ public class SearchViewModel extends ViewModel {
 
     private final int MAX_FLIGHTS_TO_SHOW = 3;
     private final MutableLiveData<List<FlightSummaryData>> trendingFlights = new MutableLiveData<>();
+//    private final MutableLiveData<List<FlightSummaryData>> allFlights = new MutableLiveData<>();
 
     public LiveData<List<FlightSummaryData>> getTrendingFlights(InputStream backupFlightData) {
         this.getFlights(backupFlightData);
@@ -40,6 +41,10 @@ public class SearchViewModel extends ViewModel {
                 try {
                     List<FlightSummaryData> parseJsonResponse = parseJsonResponse(jsonArray);
                     trendingFlights.setValue(parseJsonResponse);
+
+                    // set all Flights to same as trending flights
+                    // if time permits separate this logic
+//                    allFlights.setValue(parseJsonResponse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -61,6 +66,15 @@ public class SearchViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(d);
     }
+
+    public List<FlightSummaryData> searchFlight(String searchString) {
+        if (searchString.length() < 3) {
+            return null;
+        }
+
+        return trendingFlights.getValue().subList(1, 4);
+    }
+
 
     private List<FlightSummaryData> loadTrending(InputStream backupFlightData) {
         StringBuilder text = new StringBuilder();
@@ -90,7 +104,7 @@ public class SearchViewModel extends ViewModel {
     private List<FlightSummaryData> parseJsonResponse(JSONArray jsonArray) throws JSONException {
         List<FlightSummaryData> data = new ArrayList<>(jsonArray.length());
 
-        for (int i = 0; i < MAX_FLIGHTS_TO_SHOW; i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
 
             String flightNumber = jsonObject.getJSONObject("flight").getString("number");
