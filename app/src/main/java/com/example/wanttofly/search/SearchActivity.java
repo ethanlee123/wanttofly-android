@@ -91,6 +91,13 @@ public class SearchActivity extends AppCompatActivity
                 return false;
             }
         });
+
+        searchView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus && searchesAdapter.flightSummariesList.size() == 0) {
+                setNoResultsFoundViewVisibility(View.GONE);
+                setTrendingRecyclerViewVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void setTrendingRecyclerViewVisibility(int visibility) {
@@ -139,7 +146,7 @@ public class SearchActivity extends AppCompatActivity
     private void setupRecyclerViewSearches() {
         this.searchesAdapter = new FlightSummaryAdapter(
                 getBaseContext(),
-                new LinkedList<FlightSummaryData>(),
+                new LinkedList<>(),
                 this
         );
         rvSearches.setLayoutManager(new LinearLayoutManager(this));
