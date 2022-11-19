@@ -112,6 +112,16 @@
             tools:itemCount="4"
             tools:listitem="@layout/flight_summary_search" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_searches"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/sv_search_bar" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
