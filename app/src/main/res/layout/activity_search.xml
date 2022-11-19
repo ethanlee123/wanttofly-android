@@ -32,6 +32,7 @@
             android:layout_marginBottom="20dp"
             android:maxLines="1"
             android:text="@string/visualize_reliability"
+            style="@style/header"
             android:textColor="@color/white_200"
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -121,6 +122,17 @@
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@id/sv_search_bar" />
+
+        <include
+            android:id="@+id/layout_no_results_found"
+            layout="@layout/no_results_found"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@id/sv_search_bar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

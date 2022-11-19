@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -34,6 +35,7 @@ public class SearchActivity extends AppCompatActivity
     RecyclerView rvSearches;
     FlightSummaryAdapter searchesAdapter;
     SearchView searchView;
+    LinearLayout llNoResultsFound;
 
     SearchViewModel viewModel;
 
@@ -54,6 +56,7 @@ public class SearchActivity extends AppCompatActivity
         tvRecents = findViewById(R.id.tv_recent);
         tvTrending = findViewById(R.id.tv_trending);
         searchView = findViewById(R.id.sv_search_bar);
+        llNoResultsFound = findViewById(R.id.layout_no_results_found);
 
         setupSearchView();
         setupRecentSearches();
@@ -66,29 +69,25 @@ public class SearchActivity extends AppCompatActivity
             // Override onQueryTextSubmit method which is call when submit query is searched
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // If the list contains the search query than filter the adapter
-//                // using the filter method with the query as its argument
-//                if (viewModel.list.contains(query)) {
-//                    adapter.getFilter().filter(query);
-//                } else {
-//                    // Search query not found in List View
-//                    Toast.makeText(MainActivity.this, "Not found", Toast.LENGTH_LONG).show();
-//                }
                 return false;
             }
 
-            // This method is overridden to filter the adapter according
             // to a search query when the user is typing search
             @Override
             public boolean onQueryTextChange(String newText) {
                 setTrendingRecyclerViewVisibility(View.GONE);
                 List<FlightSummaryData> results = viewModel.searchFlight(newText);
-//                adapter.getFilter().filter(newText);
-                if (results != null) {
+
+                searchesAdapter.updateData(results);
+
+                if (searchesAdapter.flightSummariesList.size() == 0) {
+                    setSearchRecyclerView(View.GONE);
+                    setNoResultsFoundViewVisibility(View.VISIBLE);
+                } else {
                     setSearchRecyclerView(View.VISIBLE);
-                    searchesAdapter.updateData(results);
-                    return true;
+                    setNoResultsFoundViewVisibility(View.GONE);
                 }
+
                 return false;
             }
         });
@@ -101,6 +100,10 @@ public class SearchActivity extends AppCompatActivity
 
     private void setSearchRecyclerView(int visibility) {
         rvSearches.setVisibility(visibility);
+    }
+
+    private void setNoResultsFoundViewVisibility(int visibility) {
+        llNoResultsFound.setVisibility(visibility);
     }
 
     private void setupObservers() {

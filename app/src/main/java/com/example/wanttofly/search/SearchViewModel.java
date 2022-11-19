@@ -80,23 +80,25 @@ public class SearchViewModel extends ViewModel {
      * sample data due to limited API calls. If API is activated, buildSearchTrie() needs minor
      * refactor as well as this for loop
      * @param searchString
-     * @return
+     * @return List<FlightSummaryData>
      */
     public List<FlightSummaryData> searchFlight(String searchString) {
         SearchTrie node = searchTrie.search(searchString);
         List<FlightSummaryData> results = new ArrayList<>(5);
 
-        if (node != null) {
-            Set<Integer> indexes = node.getIndexes();
-            // Used to limit the number of results displayed
-            int MAX_RESULTS_RETURN = 8;
-            int count = 0;
-            for (int i: indexes) {
-                results.add(trendingFlights.getValue().get(i));
-                count++;
-                if (count >= MAX_RESULTS_RETURN) {
-                    break;
-                }
+        if (node == null) {
+            return results;
+        }
+
+        Set<Integer> indexes = node.getIndexes();
+        // Used to limit the number of results displayed
+        int MAX_RESULTS_RETURN = 8;
+        int count = 0;
+        for (int i: indexes) {
+            results.add(trendingFlights.getValue().get(i));
+            count++;
+            if (count >= MAX_RESULTS_RETURN) {
+                break;
             }
         }
         return results;
