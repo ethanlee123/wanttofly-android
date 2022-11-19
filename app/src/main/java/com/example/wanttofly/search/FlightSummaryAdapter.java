@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanttofly.R;
 
-import org.w3c.dom.Text;
-
+import java.util.Collection;
 import java.util.List;
 
 public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdapter.ViewHolder>{
@@ -22,10 +21,10 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     Context context;
 
     public FlightSummaryAdapter(Context context,
-                                List<FlightSummaryData> flightSummariesList,
+                                Collection<FlightSummaryData> flightSummariesList,
                                 IOnItemClickListener listener) {
         this.context = context;
-        this.flightSummariesList = flightSummariesList;
+        this.flightSummariesList = (List<FlightSummaryData>) flightSummariesList;
         this.listener = listener;
     }
 
@@ -66,6 +65,12 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     @Override
     public int getItemCount() {
         return flightSummariesList.size();
+    }
+
+    public void updateData(List<FlightSummaryData> newData) {
+        flightSummariesList.clear();
+        flightSummariesList.addAll(newData);
+        notifyDataSetChanged();
     }
 
     public interface IOnItemClickListener {
