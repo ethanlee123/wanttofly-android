@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/start_guideline"
@@ -24,48 +24,59 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="20sp" />
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toTopOf="parent"/>
 
-
-        <TextView
-            android:id="@+id/dt_summary"
+        <LinearLayout
+            android:id="@+id/upper_summary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/white_200"
-            android:textAlignment="center"
-            android:layout_marginTop="25dp"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/upper_summary_flight_details_background">
 
-        <TextView
-            android:id="@+id/dt_wish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/white_200"
-            android:textAlignment="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="35dp"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/dt_summary"/>
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/dt_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="YO BROOOOOOO"
+                android:textColor="@color/white_200"
+                android:textAlignment="center"
+                android:layout_marginTop="25dp"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+            <TextView
+                android:id="@+id/dt_wish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="YO BROOOOOOO"
+                android:textColor="@color/white_200"
+                android:textAlignment="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="85dp"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/dt_summary"/>
+
+        </LinearLayout>
 
         <include
             android:id="@+id/dt_score"
             layout="@layout/flight_score_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="-55dp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/dt_wish"/>
+            app:layout_constraintTop_toBottomOf="@id/upper_summary"/>
 
         <include
             android:id="@+id/dt_pie_chart"

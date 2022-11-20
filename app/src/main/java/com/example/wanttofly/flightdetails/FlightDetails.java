@@ -26,24 +26,43 @@ public class FlightDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_details);
+        createToolbar();
+        assignSummaryValues();
+    }
 
+    /**
+     * Creating the action menu with the back button and the title for the page.
+     */
+    public void createToolbar() {
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        flightSummaryInLine = (TextView) findViewById(R.id.dt_summary);
-        flightWish = (TextView) findViewById(R.id.dt_wish);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("");
-        //Setting the title of the toolbar
+    }
+
+    /**
+     * Assigning the values for Toolbar title, summary and wish.
+     */
+    public void assignSummaryValues() {
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        flightSummaryInLine = (TextView) findViewById(R.id.dt_summary);
+        flightWish = (TextView) findViewById(R.id.dt_wish);
+
         String city = "Seattle";
         String oneLineSummary = "Flight #A123FG to Seattle\nlooks good to go.";
         String wish = "We wish you safe travels.";
+
         toolbarTitle.setText(city);
         flightSummaryInLine.setText(oneLineSummary);
         flightWish.setText(wish);
     }
 
+    /**
+     * Overriding the event listener to return to the previous page.
+     * @param item consists of back button only.
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
