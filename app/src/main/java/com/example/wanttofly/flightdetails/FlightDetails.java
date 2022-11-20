@@ -39,6 +39,10 @@ public class FlightDetails extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("");
+
+        myToolbar.setNavigationOnClickListener(view -> {
+            super.onBackPressed();
+        });
     }
 
     /**
@@ -57,29 +61,6 @@ public class FlightDetails extends AppCompatActivity {
         flightSummaryInLine.setText(oneLineSummary);
         flightWish.setText(wish);
     }
-
-    /**
-     * Overriding the event listener to return to the previous page.
-     * @param item consists of back button only.
-     * @return boolean
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // todo: goto back activity from here
-
-                Intent intent = new Intent(FlightDetails.this, SearchActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
     public static Intent getIntent(Context context) {
         return new Intent(context, FlightDetails.class);
