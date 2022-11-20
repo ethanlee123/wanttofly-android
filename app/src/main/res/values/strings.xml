@@ -22,5 +22,6 @@
     <string name="hashtag">#</string>
     <string name="no_results_found">No results found</string>
     <string name="try_searching_again">Try searching again</string>
+    <string name="dt_field_heading"><![CDATA[DELAY &\nCANCELLATION]]></string>
 
 </resources>
