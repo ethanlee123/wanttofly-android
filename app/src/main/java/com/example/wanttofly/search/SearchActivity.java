@@ -33,10 +33,11 @@ public class SearchActivity extends AppCompatActivity
     RecyclerView rvRecents;
     RecyclerView rvTrending;
     RecyclerView rvSearches;
-    FlightSummaryAdapter searchesAdapter;
     SearchView searchView;
     LinearLayout llNoResultsFound;
 
+    FlightSummaryAdapter trendingFlightsAdapter;
+    FlightSummaryAdapter searchesAdapter;
     SearchViewModel viewModel;
 
     Queue<FlightSummaryData> recentSearches = new LinkedList<>();
@@ -122,16 +123,22 @@ public class SearchActivity extends AppCompatActivity
             int startIndex = rand.nextInt(flightSummaryData.size() - 1);
             setupRecyclerViewTrending(flightSummaryData.subList(startIndex, startIndex + 3));
         });
+
+        viewModel.getSearchedFlights().observe(this, flightSummaryData -> {
+            if (flightSummaryData != null) {
+                searchesAdapter.updateData(flightSummaryData);
+            }
+        });
     }
 
     private void setupRecyclerViewTrending(List<FlightSummaryData> trendingFlights) {
-        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(
+        trendingFlightsAdapter = new FlightSummaryAdapter(
                 getBaseContext(),
                 trendingFlights,
                 this
         );
         rvTrending.setLayoutManager(new LinearLayoutManager(this));
-        rvTrending.setAdapter(flightSummaryAdapter);
+        rvTrending.setAdapter(trendingFlightsAdapter);
 
         rvTrending.addItemDecoration(
                 new MarginItemDecoration(
