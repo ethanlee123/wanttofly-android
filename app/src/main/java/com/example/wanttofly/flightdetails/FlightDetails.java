@@ -31,6 +31,28 @@ public class FlightDetails extends AppCompatActivity {
     }
 
     /**
+     * Overriding the event listener to return to the previous page.
+     * @param item consists of back button only.
+     * @return boolean
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+
+                Intent intent = new Intent(FlightDetails.this, SearchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
      * Creating the action menu with the back button and the title for the page.
      */
     public void createToolbar() {
@@ -58,27 +80,6 @@ public class FlightDetails extends AppCompatActivity {
         flightWish.setText(wish);
     }
 
-    /**
-     * Overriding the event listener to return to the previous page.
-     * @param item consists of back button only.
-     * @return boolean
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // todo: goto back activity from here
-
-                Intent intent = new Intent(FlightDetails.this, SearchActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 
     public static Intent getIntent(Context context) {
