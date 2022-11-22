@@ -3,11 +3,12 @@ package com.example.wanttofly.search;
 import java.util.Random;
 
 public class FlightSummaryData {
-    String flightStatus = "On Time";
+    String flightStatus;
     int flightRating;
     String airlineName;
     String arrivalAirport;
     String flightNumber;
+    int departureDelay; // CAN BE NULL which means no delay
 
     int low = 60;
     int high = 100;
@@ -15,11 +16,15 @@ public class FlightSummaryData {
     public FlightSummaryData(int rating,
                              String airlineName,
                              String arrivalAirport,
-                             String flightNumber) {
+                             String flightNumber,
+                             String flightStatus,
+                             int departureDelay) {
         this.flightRating = randomNumber();
         this.airlineName = airlineName;
         this.arrivalAirport = arrivalAirport;
         this.flightNumber = flightNumber;
+        this.flightStatus = flightStatus;
+        this.departureDelay = departureDelay;
     }
 
     private int randomNumber() {
@@ -27,32 +32,8 @@ public class FlightSummaryData {
         return rand.nextInt(high - low) + low;
     }
 
-    public void setFlightStatus(String flightStatus) {
-        this.flightStatus = flightStatus;
-    }
-
-    public void setFlightRating(int flightRating) {
-        this.flightRating = flightRating;
-    }
-
-    public void setAirlineName(String airlineName) {
-        this.airlineName = airlineName;
-    }
-
-    public void setArrivalAirport(String arrivalAirport) {
-        this.arrivalAirport = arrivalAirport;
-    }
-
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
-    }
-
     public String getAirlineName() {
         return this.airlineName;
-    }
-
-    public String getFlightStatus() {
-        return this.flightStatus;
     }
 
     public String getArrivalAirport() {
@@ -65,5 +46,29 @@ public class FlightSummaryData {
 
     public int getFlightRating() {
         return this.flightRating;
+    }
+
+    public String getFlightStatus() {
+        if (isOnTime()) {
+            return FlightStatusCheck.FlightStatus.ON_TIME.toString();
+        } else if (isCancelled()) {
+            return FlightStatusCheck.FlightStatus.CANCELLED.toString();
+        } else if (isDelayed()) {
+            return FlightStatusCheck.FlightStatus.DELAYED.toString();
+        }
+        return this.flightStatus;
+    }
+
+    public boolean isOnTime() {
+        return this.departureDelay == 0
+                & !this.flightStatus.equalsIgnoreCase("cancelled");
+    }
+
+    public boolean isCancelled() {
+        return this.flightStatus.equalsIgnoreCase("cancelled");
+    }
+
+    public boolean isDelayed() {
+        return this.departureDelay != 0;
     }
 }

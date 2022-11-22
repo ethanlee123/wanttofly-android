@@ -20,6 +20,7 @@
     <color name="gray_850">#313131</color>
     <color name="gray_900">#212121</color>
 
+    <color name="gray_850_50">#FF313131</color>
 <!--    dark Theme-->
     <color name="background_dark_gray">#121212</color>
     <color name="white_200">#E8EDE7</color>

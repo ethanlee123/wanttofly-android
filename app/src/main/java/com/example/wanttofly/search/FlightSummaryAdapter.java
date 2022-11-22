@@ -79,6 +79,7 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
         String flightNum = context.getString(R.string.hashtag)
                 + flightSummariesList.get(position).getFlightNumber();
         holder.flightNumber.setText(flightNum);
+        holder.flightStatus.setText(flightSummariesList.get(position).getFlightStatus());
 
         holder.pieChart.startAnimation();
     }
@@ -90,7 +91,7 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
     /**
      * Better way of update data set, search DiffUtil
-     * @param newData
+     * @param newData List<FlightSummaryData>
      */
     public void updateData(List<FlightSummaryData> newData) {
         flightSummariesList.clear();
