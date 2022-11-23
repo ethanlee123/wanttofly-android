@@ -24,6 +24,7 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     IOnItemClickListener listener;
     Context context;
 
+    // Possible improvement: use generics to limit collection to list and queue?
     public FlightSummaryAdapter(Context context,
                                 Collection<FlightSummaryData> flightSummariesList,
                                 IOnItemClickListener listener) {
@@ -49,6 +50,12 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
             flightStatus = itemView.findViewById(R.id.tv_status);
             flightRating = itemView.findViewById(R.id.tv_flight_score);
         }
+
+        public void bind(View view,
+                         FlightSummaryData flightData,
+                         IOnItemClickListener clickListener) {
+            view.setOnClickListener(view1 -> clickListener.onItemClick(flightData));
+        }
     }
 
     @NonNull
@@ -56,8 +63,6 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.flight_summary_search, parent, false);
-
-        view.setOnClickListener(view1 -> listener.onItemClick());
 
         return new ViewHolder(view);
 
@@ -82,6 +87,8 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
         holder.flightStatus.setText(flightSummariesList.get(position).getFlightStatus());
 
         holder.pieChart.startAnimation();
+
+        holder.bind(holder.itemView, flightSummariesList.get(position), listener);
     }
 
     @Override
@@ -93,13 +100,13 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
      * Better way of update data set, search DiffUtil
      * @param newData List<FlightSummaryData>
      */
-    public void updateData(List<FlightSummaryData> newData) {
+    public void updateData(Collection<FlightSummaryData> newData) {
         flightSummariesList.clear();
         flightSummariesList.addAll(newData);
         notifyDataSetChanged();
     }
 
     public interface IOnItemClickListener {
-        void onItemClick();
+        void onItemClick(final FlightSummaryData flightSummaryData);
     }
 }

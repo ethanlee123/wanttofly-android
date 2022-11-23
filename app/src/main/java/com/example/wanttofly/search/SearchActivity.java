@@ -22,7 +22,6 @@ import com.example.wanttofly.flightdetails.FlightDetails;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Random;
 
 public class SearchActivity extends AppCompatActivity
@@ -38,9 +37,9 @@ public class SearchActivity extends AppCompatActivity
 
     FlightSummaryAdapter trendingFlightsAdapter;
     FlightSummaryAdapter searchesAdapter;
-    SearchViewModel viewModel;
+    FlightSummaryAdapter recentsAdapter; // Recent searches that have been clicked on
 
-    Queue<FlightSummaryData> recentSearches = new LinkedList<>();
+    SearchViewModel viewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +62,7 @@ public class SearchActivity extends AppCompatActivity
         setupRecentSearches();
         setupFilterButton();
         setupRecyclerViewSearches();
+        setupRecentsRecyclerView();
     }
 
     private void setupSearchView() {
@@ -97,10 +97,17 @@ public class SearchActivity extends AppCompatActivity
             if (!hasFocus && searchesAdapter.flightSummariesList.size() == 0) {
                 setNoResultsFoundViewVisibility(View.GONE);
                 setTrendingRecyclerViewVisibility(View.VISIBLE);
+                setupRecentSearchesViewVisibility(View.VISIBLE);
+            } else {
+                setupRecentSearchesViewVisibility(View.GONE);
             }
         });
     }
 
+    private void setupRecentSearchesViewVisibility(int visibility) {
+        tvRecents.setVisibility(visibility);
+        rvRecents.setVisibility(visibility);
+    }
     private void setTrendingRecyclerViewVisibility(int visibility) {
         tvTrending.setVisibility(visibility);
         rvTrending.setVisibility(visibility);
@@ -127,6 +134,16 @@ public class SearchActivity extends AppCompatActivity
         viewModel.getSearchedFlights().observe(this, flightSummaryData -> {
             if (flightSummaryData != null) {
                 searchesAdapter.updateData(flightSummaryData);
+            }
+        });
+
+        viewModel.getRecentsSearchesObservable().observe(this, flightSummaryDataQueue -> {
+            if (flightSummaryDataQueue.size() != 0) {
+                if (!searchView.hasFocus()) {
+                    setupRecentSearchesViewVisibility(View.GONE);
+                }
+
+                recentsAdapter.updateData(flightSummaryDataQueue);
             }
         });
     }
@@ -164,7 +181,7 @@ public class SearchActivity extends AppCompatActivity
 
     private void setupRecentSearches() {
         // Show recycler view and Recents title if there are any recent searches
-        if (recentSearches.size() == 0) {
+        if (viewModel.getRecentSearches().size() == 0) {
             tvRecents.setVisibility(View.GONE);
             rvRecents.setVisibility(View.GONE);
             return;
@@ -174,13 +191,13 @@ public class SearchActivity extends AppCompatActivity
     }
 
     private void setupRecentsRecyclerView() {
-        FlightSummaryAdapter flightSummaryAdapter = new FlightSummaryAdapter(
+        this.recentsAdapter = new FlightSummaryAdapter(
                 getBaseContext(),
-                recentSearches,
+                viewModel.getRecentSearches(),
                 this
         );
         rvRecents.setLayoutManager(new LinearLayoutManager(this));
-        rvRecents.setAdapter(flightSummaryAdapter);
+        rvRecents.setAdapter(this.recentsAdapter);
 
         rvRecents.addItemDecoration(
                 new MarginItemDecoration(
@@ -203,7 +220,15 @@ public class SearchActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick() {
+    public void onItemClick(FlightSummaryData flightSummaryData) {
+//        int viewPosition = rvSearches.getChildAdapterPosition(view);
+        if (viewModel.getSearchedFlights().getValue() != null) {
+//            FlightSummaryData flightSummaryData
+//                    = viewModel.getSearchedFlights().getValue().get(viewPosition);
+
+            viewModel.addToRecentsQueue(flightSummaryData);
+        }
+
         startActivity(FlightDetails.getIntent(this));
     }
 }
