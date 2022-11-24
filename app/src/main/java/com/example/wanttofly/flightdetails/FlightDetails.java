@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -21,6 +23,8 @@ import com.example.wanttofly.search.FlightStatusCheck;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,22 +38,53 @@ public class FlightDetails extends AppCompatActivity {
     Toolbar myToolbar;
     TextView toolbarTitle;
     TextView flightSummaryInLine;
+    TextView recentTweets;
+    View twitterView;
 
     // Do not modify
     private String arrivalAirport;
+
+    FlightDetailsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_details);
 
+        this.viewModel = new ViewModelProvider(this).get(FlightDetailsViewModel.class);
+
         Bundle bundle = getIntent().getExtras();
         this.arrivalAirport = bundle.getString(ARG_2);
+
+        twitterView = findViewById(R.id.dt_twitter_view);
 
         createToolbar();
         assignSummaryValues();
         setupFlightRatingCard();
         setupPieChartCard();
+        setupTwitterSentimentsCard();
+    }
+
+    private void setupTwitterSentimentsCard() {
+        recentTweets = findViewById(R.id.dt_twitter_info);
+        setRecentTweetsDate();
+
+        viewModel.getRecentTweets(this.arrivalAirport).observe(this, listOfTweets -> {
+            if (listOfTweets.size() != 0) {
+                recentTweets.setText(listOfTweets.get(0));
+            }
+            // Normally inside the above if statement, but for demo purposes always show regardless
+            // if any tweets are found.
+            twitterView.setVisibility(View.VISIBLE);
+        });
+    }
+
+    private void setRecentTweetsDate() {
+        TextView recentTweetsDate = findViewById(R.id.dt_date);
+        LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String date = dateObj.format(formatter);
+        recentTweetsDate.setText(date);
     }
 
     @SuppressLint("ResourceType")

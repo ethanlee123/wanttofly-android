@@ -5,8 +5,8 @@
     android:background="@drawable/bg_flight_summary_view"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -37,18 +37,19 @@
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:textSize="14sp"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/rl_container"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dt_info_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Very High chance of being on time."/>
 
     <ImageButton

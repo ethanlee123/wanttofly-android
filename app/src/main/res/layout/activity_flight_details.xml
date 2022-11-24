@@ -42,13 +42,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="YO BROOOOOOO"
                 android:textColor="@color/gray_200"
                 android:textAlignment="center"
                 android:layout_marginTop="25dp"
                 android:layout_marginStart="@dimen/one_line_summary_start_margin"
                 android:layout_marginEnd="@dimen/one_line_summary_end_margin"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                tools:text="YO BROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"/>
 
             <TextView
                 android:id="@+id/dt_wish"
@@ -90,10 +90,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/flight_details_card_margin_top"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/dt_pie_chart" />
+            app:layout_constraintTop_toBottomOf="@id/dt_pie_chart"
+            tools:visibility="visible"/>
 
         <include
             android:id="@+id/dt_weather_view"

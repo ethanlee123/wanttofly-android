@@ -40,4 +40,5 @@
     <string name="low_flight_score">Expect possible flight delays.</string>
     <string name="cancelled_flight_score">This flight has been cancelled.</string>
     <string name="no_flight_score">Sorry, we couldn\'t not find a flight rating.</string>
+    <string name="swoopair_we_wanttofly_bunch_of_cancellations_and_delays_here">\@SwoopAir we #WantToFly, bunch of cancellations and delays here</string>
 </resources>

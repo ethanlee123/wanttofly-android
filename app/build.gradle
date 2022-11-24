@@ -19,6 +19,7 @@ android {
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
         buildConfigField "String", "FLIGHT_LABS_API_KEY", "\"${properties.getProperty("FLIGHT_LABS_API_KEY")}\""
+        buildConfigField "String", "TWITTER_BEARER_TOKEN", "\"${properties.getProperty("TWITTER_BEARER_TOKEN")}\""
     }
 
     buildTypes {
