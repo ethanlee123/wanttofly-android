@@ -45,11 +45,11 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:textSize="14sp"
-        android:text="Very High chance of being on time."
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/rl_container"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Very High chance of being on time."/>
 
     <ImageButton
         android:id="@+id/dt_info_button"
@@ -61,6 +61,7 @@
         android:minHeight="40dp"
         android:src="@drawable/ic_more_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/more_information" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

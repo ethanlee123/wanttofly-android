@@ -1,7 +1,9 @@
 package com.example.wanttofly.flightdetails;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -10,6 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.wanttofly.R;
 import com.example.wanttofly.search.FlightStatusCheck;
+
+import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.PieModel;
 
 import java.util.Objects;
 
@@ -22,7 +27,6 @@ public class FlightDetails extends AppCompatActivity {
     Toolbar myToolbar;
     TextView toolbarTitle;
     TextView flightSummaryInLine;
-    TextView flightWish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,45 @@ public class FlightDetails extends AppCompatActivity {
 
         createToolbar();
         assignSummaryValues();
+        setupFlightRatingCard();
+    }
+
+    @SuppressLint("ResourceType")
+    private void setupFlightRatingCard() {
+        Bundle bundle = getIntent().getExtras();
+        int flightRating = bundle.getInt(ARG_3);
+        PieChart pieChart = findViewById(R.id.pie_chart);
+        TextView rating = findViewById(R.id.tv_flight_score);
+        TextView ratingInfo = findViewById(R.id.tv_status);
+
+        String donutColorMain = getResources().getString(R.color.donut_chart_main);
+        String donutColorFill = getResources().getString(R.color.donut_chart_fill);
+        pieChart.addPieSlice(new PieModel("", flightRating,
+                Color.parseColor(donutColorMain)));
+        pieChart.addPieSlice(new PieModel("", 100-flightRating,
+                Color.parseColor(donutColorFill)));
+
+        rating.setText(String.valueOf(flightRating));
+        ratingInfo.setText(getRatingBlurb());
+    }
+
+    private String getRatingBlurb() {
+        Bundle bundle = getIntent().getExtras();
+        String flightStatus = bundle.getString(ARG_4);
+        int flightRating = bundle.getInt(ARG_3);
+
+        if (flightStatus.equalsIgnoreCase(FlightStatusCheck.FlightStatus.DELAYED.toString())) {
+            return getResources().getString(R.string.low_flight_score);
+        } else if (flightStatus.equalsIgnoreCase(FlightStatusCheck.FlightStatus.CANCELLED.toString())) {
+            return getResources().getString(R.string.cancelled_flight_score);
+        }
+
+        if (flightRating > 80) {
+            return getResources().getString(R.string.very_high_flight_score);
+        } else if (flightRating > 60) {
+            return getResources().getString(R.string.high_flight_score);
+        }
+        return getResources().getString(R.string.low_flight_score);
     }
 
     /**
@@ -52,19 +95,15 @@ public class FlightDetails extends AppCompatActivity {
      * Assigning the values for Toolbar title, summary and wish.
      */
     public void assignSummaryValues() {
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        flightSummaryInLine = (TextView) findViewById(R.id.dt_summary);
-        flightWish = (TextView) findViewById(R.id.dt_wish);
+        toolbarTitle = findViewById(R.id.toolbar_title);
+        flightSummaryInLine = findViewById(R.id.dt_summary);
 
         Bundle bundle = getIntent().getExtras();
-        String flightNumber = bundle.getString(ARG_1);
         String arrivalAirport = bundle.getString(ARG_2);
         String oneLineSummary = getOneLineSummary();
-        String wish = "We wish you safe travels.";
 
         toolbarTitle.setText(arrivalAirport);
         flightSummaryInLine.setText(oneLineSummary);
-        flightWish.setText(wish);
     }
 
     private String getOneLineSummary() {
