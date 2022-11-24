@@ -7,4 +7,6 @@
 
     <dimen name="one_line_summary_start_margin">20dp</dimen>
     <dimen name="one_line_summary_end_margin">20dp</dimen>
+
+    <dimen name="flight_details_card_margin_top">15dp</dimen>
 </resources>

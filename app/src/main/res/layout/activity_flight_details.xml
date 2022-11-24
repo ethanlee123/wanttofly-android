@@ -78,28 +78,29 @@
             layout="@layout/flight_details_pie_chart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="@dimen/flight_details_card_margin_top"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@id/dt_score"/>
+
 
         <include
             android:id="@+id/dt_twitter_view"
             layout="@layout/flight_detail_twitter_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="@dimen/flight_details_card_margin_top"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@id/dt_pie_chart"/>
-
+            app:layout_constraintTop_toBottomOf="@id/dt_pie_chart" />
 
         <include
             android:id="@+id/dt_weather_view"
             layout="@layout/flight_dest_weather_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="@dimen/flight_details_card_margin_top"
             android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
