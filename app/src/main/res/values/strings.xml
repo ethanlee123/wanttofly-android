@@ -29,4 +29,7 @@
     <string name="delayed">Delayed</string>
     <string name="cancelled">Cancelled</string>
 
+    <string name="one_line_summary_on_time">Flight #%s to %s looks good to go.</string>
+    <string name="one_line_summary_delayed">Flight #%s to %s looks to be delayed.</string>
+    <string name="one_line_summary_cancelled">Flight #%s to %s has unfortunately been cancelled.</string>
 </resources>

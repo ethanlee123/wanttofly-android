@@ -221,14 +221,17 @@ public class SearchActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(FlightSummaryData flightSummaryData) {
-//        int viewPosition = rvSearches.getChildAdapterPosition(view);
         if (viewModel.getSearchedFlights().getValue() != null) {
-//            FlightSummaryData flightSummaryData
-//                    = viewModel.getSearchedFlights().getValue().get(viewPosition);
-
             viewModel.addToRecentsQueue(flightSummaryData);
         }
 
-        startActivity(FlightDetails.getIntent(this));
+        // Pass data to next activity
+        String flightNumber = flightSummaryData.getFlightNumber();
+        String arrivalAirport = flightSummaryData.getArrivalAirport();
+        int flightRating = flightSummaryData.getFlightRating();
+        String flightStatus = flightSummaryData.getFlightStatus();
+
+        startActivity(FlightDetails.getIntent(this, flightNumber,
+                arrivalAirport, flightRating, flightStatus));
     }
 }

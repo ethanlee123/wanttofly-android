@@ -3,20 +3,22 @@ package com.example.wanttofly.flightdetails;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.wanttofly.R;
-import com.example.wanttofly.search.SearchActivity;
+import com.example.wanttofly.search.FlightStatusCheck;
 
 import java.util.Objects;
 
 public class FlightDetails extends AppCompatActivity {
+    private static final String ARG_1 = "ARG_1";
+    private static final String ARG_2 = "ARG_2";
+    private static final String ARG_3 = "ARG_3";
+    private static final String ARG_4 = "ARG_4";
+
     Toolbar myToolbar;
     TextView toolbarTitle;
     TextView flightSummaryInLine;
@@ -26,6 +28,7 @@ public class FlightDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_details);
+
         createToolbar();
         assignSummaryValues();
     }
@@ -53,17 +56,49 @@ public class FlightDetails extends AppCompatActivity {
         flightSummaryInLine = (TextView) findViewById(R.id.dt_summary);
         flightWish = (TextView) findViewById(R.id.dt_wish);
 
-        String city = "Seattle";
-        String oneLineSummary = "Flight #A123FG to Seattle\nlooks good to go.";
+        Bundle bundle = getIntent().getExtras();
+        String flightNumber = bundle.getString(ARG_1);
+        String arrivalAirport = bundle.getString(ARG_2);
+        String oneLineSummary = getOneLineSummary();
         String wish = "We wish you safe travels.";
 
-        toolbarTitle.setText(city);
+        toolbarTitle.setText(arrivalAirport);
         flightSummaryInLine.setText(oneLineSummary);
         flightWish.setText(wish);
     }
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, FlightDetails.class);
+    private String getOneLineSummary() {
+        Bundle bundle = getIntent().getExtras();
+        String flightNumber = bundle.getString(ARG_1);
+        String arrivalAirport = bundle.getString(ARG_2);
+        String flightStatus = bundle.getString(ARG_4);
+
+        if (flightStatus.equalsIgnoreCase(FlightStatusCheck.FlightStatus.ON_TIME.toString())) {
+            return getResources()
+                    .getString(R.string.one_line_summary_on_time, flightNumber, arrivalAirport);
+        } else if (flightStatus.equalsIgnoreCase(FlightStatusCheck.FlightStatus.DELAYED.toString())) {
+            getResources()
+                    .getString(R.string.one_line_summary_delayed, flightNumber, arrivalAirport);
+        }
+        return getResources()
+                .getString(R.string.one_line_summary_cancelled, flightNumber, arrivalAirport);
+    }
+
+    public static Intent getIntent(Context context,
+                                   String flightNumber,
+                                   String arrivalAirport,
+                                   int flightRating,
+                                   String flightStatus) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARG_1, flightNumber);
+        bundle.putString(ARG_2, arrivalAirport);
+        bundle.putInt(ARG_3, flightRating);
+        bundle.putString(ARG_4, flightStatus);
+
+        Intent intent = new Intent(context, FlightDetails.class);
+        intent.putExtras(bundle);
+
+        return intent;
     }
 }
 
