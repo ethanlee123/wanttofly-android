@@ -65,13 +65,14 @@ public class FlightDetails extends AppCompatActivity {
         data.add(new ValueDataEntry("Delay", (100-flightRating)/2));
         data.add(new ValueDataEntry("Cancel", (100-flightRating)/2));
 
+        String white = "#" + getResources().getString(R.color.white_200).substring(3);
+        String backgroundColor = "#" + getResources().getString(R.color.gray_850).substring(3);
         pie.data(data);
         pie.labels().position("outside");
-        String white = "#" + getResources().getString(R.color.white_200).substring(3);
         pie.labels().fontColor(white);
-        pie.labels().fontSize(18);
-        String backgroundColor = "#" + getResources().getString(R.color.gray_850).substring(3);
+        pie.labels().fontSize(14);
         pie.background().fill(backgroundColor, 1.0);
+        pie.animation().enabled(true);
 
         anyChartView.setChart(pie);
     }
@@ -90,6 +91,7 @@ public class FlightDetails extends AppCompatActivity {
                 Color.parseColor(donutColorMain)));
         pieChart.addPieSlice(new PieModel("", 100-flightRating,
                 Color.parseColor(donutColorFill)));
+        pieChart.startAnimation();
 
         rating.setText(String.valueOf(flightRating));
         ratingInfo.setText(getRatingBlurb());
