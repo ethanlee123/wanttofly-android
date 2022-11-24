@@ -32,4 +32,9 @@
     <color name="blue_600">#036280</color>
     <color name="blue_400">#378ba4</color>
     <color name="blue_200">#81bece</color>
+
+<!--    Flight status background-->
+    <color name="green">#6EBF67</color>
+    <color name="yellow">#FEB019</color>
+    <color name="red">#FF0000</color>
 </resources>

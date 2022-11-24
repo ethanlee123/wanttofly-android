@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanttofly.R;
@@ -16,9 +17,16 @@ import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdapter.ViewHolder>{
+    static final Map<String, Integer> flightStatusMap = new HashMap<String, Integer>() {{
+        put(FlightStatusCheck.FlightStatus.ON_TIME.toString(), R.drawable.bg_flight_status_ontime);
+        put(FlightStatusCheck.FlightStatus.DELAYED.toString(), R.drawable.bg_flight_status_delayed);
+        put(FlightStatusCheck.FlightStatus.CANCELLED.toString(), R.drawable.bg_flight_status_cancelled);
+    }};
 
     List<FlightSummaryData> flightSummariesList;
     IOnItemClickListener listener;
@@ -84,11 +92,25 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
         String flightNum = context.getString(R.string.hashtag)
                 + flightSummariesList.get(position).getFlightNumber();
         holder.flightNumber.setText(flightNum);
-        holder.flightStatus.setText(flightSummariesList.get(position).getFlightStatus());
+
+        setFlightStatus(holder, position);
 
         holder.pieChart.startAnimation();
 
         holder.bind(holder.itemView, flightSummariesList.get(position), listener);
+    }
+
+    private void setFlightStatus(@NonNull ViewHolder holder, int position) {
+        String flighStatus = flightSummariesList.get(position).getFlightStatus();
+        holder.flightStatus.setText(flighStatus);
+
+
+        Integer drawable = flightStatusMap.get(flighStatus);
+        if (drawable == null) {
+            drawable = R.drawable.bg_flight_status_none;
+        }
+        holder.flightStatus.setBackground(
+                ResourcesCompat.getDrawable(context.getResources(), drawable, null));
     }
 
     @Override
