@@ -35,10 +35,16 @@ public class FlightDetails extends AppCompatActivity {
     TextView toolbarTitle;
     TextView flightSummaryInLine;
 
+    // Do not modify
+    private String arrivalAirport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_details);
+
+        Bundle bundle = getIntent().getExtras();
+        this.arrivalAirport = bundle.getString(ARG_2);
 
         createToolbar();
         assignSummaryValues();
@@ -128,18 +134,15 @@ public class FlightDetails extends AppCompatActivity {
         toolbarTitle = findViewById(R.id.toolbar_title);
         flightSummaryInLine = findViewById(R.id.dt_summary);
 
-        Bundle bundle = getIntent().getExtras();
-        String arrivalAirport = bundle.getString(ARG_2);
         String oneLineSummary = getOneLineSummary();
 
-        toolbarTitle.setText(arrivalAirport);
+        toolbarTitle.setText(this.arrivalAirport);
         flightSummaryInLine.setText(oneLineSummary);
     }
 
     private String getOneLineSummary() {
         Bundle bundle = getIntent().getExtras();
         String flightNumber = bundle.getString(ARG_1);
-        String arrivalAirport = bundle.getString(ARG_2);
         String flightStatus = bundle.getString(ARG_4);
 
         if (flightStatus.equalsIgnoreCase(FlightStatusCheck.FlightStatus.ON_TIME.toString())) {
