@@ -10,12 +10,19 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
 import com.example.wanttofly.R;
 import com.example.wanttofly.search.FlightStatusCheck;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FlightDetails extends AppCompatActivity {
@@ -36,13 +43,38 @@ public class FlightDetails extends AppCompatActivity {
         createToolbar();
         assignSummaryValues();
         setupFlightRatingCard();
+        setupPieChartCard();
+    }
+
+    @SuppressLint("ResourceType")
+    private void setupPieChartCard() {
+        AnyChartView anyChartView = findViewById(R.id.any_chart_view);
+        Pie pie = AnyChart.pie();
+
+        Bundle bundle = getIntent().getExtras();
+        int flightRating = bundle.getInt(ARG_3);
+
+        List<DataEntry> data = new ArrayList<>(3);
+        data.add(new ValueDataEntry("On Time", flightRating*1.5));
+        data.add(new ValueDataEntry("Delay", (100-flightRating)/2));
+        data.add(new ValueDataEntry("Cancel", (100-flightRating)/2));
+
+        pie.data(data);
+        pie.labels().position("outside");
+        String white = "#" + getResources().getString(R.color.white_200).substring(3);
+        pie.labels().fontColor(white);
+        pie.labels().fontSize(18);
+        String backgroundColor = "#" + getResources().getString(R.color.gray_850).substring(3);
+        pie.background().fill(backgroundColor, 1.0);
+
+        anyChartView.setChart(pie);
     }
 
     @SuppressLint("ResourceType")
     private void setupFlightRatingCard() {
         Bundle bundle = getIntent().getExtras();
         int flightRating = bundle.getInt(ARG_3);
-        PieChart pieChart = findViewById(R.id.pie_chart);
+        PieChart pieChart = findViewById(R.id.donut_chart);
         TextView rating = findViewById(R.id.tv_flight_score);
         TextView ratingInfo = findViewById(R.id.tv_status);
 
@@ -80,15 +112,13 @@ public class FlightDetails extends AppCompatActivity {
      * Creating the action menu with the back button and the title for the page.
      */
     public void createToolbar() {
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        myToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("");
 
-        myToolbar.setNavigationOnClickListener(view -> {
-            super.onBackPressed();
-        });
+        myToolbar.setNavigationOnClickListener(view -> super.onBackPressed());
     }
 
     /**

@@ -43,7 +43,7 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            pieChart = itemView.findViewById(R.id.pie_chart);
+            pieChart = itemView.findViewById(R.id.donut_chart);
             airline = itemView.findViewById(R.id.tv_airline);
             destination = itemView.findViewById(R.id.tv_destination);
             flightNumber = itemView.findViewById(R.id.tv_flight_number);

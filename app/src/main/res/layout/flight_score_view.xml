@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <org.eazegraph.lib.charts.PieChart
-            android:id="@+id/pie_chart"
+            android:id="@+id/donut_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:egInnerPaddingColor="@color/gray_850"
