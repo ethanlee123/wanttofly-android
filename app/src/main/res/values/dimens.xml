@@ -4,4 +4,12 @@
     <dimen name="app_wide_vert_end_guideline">20dp</dimen>
     <dimen name="app_wide_horizontal_start_guideline">40dp</dimen>
     <dimen name="flight_summary_view_bottom_margin">15dp</dimen>
+
+    <dimen name="one_line_summary_start_margin">20dp</dimen>
+    <dimen name="one_line_summary_end_margin">20dp</dimen>
+
+    <dimen name="flight_details_card_margin_top">15dp</dimen>
+
+    <dimen name="flight_details_card_padding">14dp</dimen>
+
 </resources>

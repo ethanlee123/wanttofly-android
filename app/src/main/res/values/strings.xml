@@ -16,7 +16,6 @@
     <string name="search_by_flight_number">Search by flight number</string>
     <string name="recent">Recent</string>
     <string name="trending">Trending</string>
-    <string name="on_time_capitalized">ON TIME</string>
     <string name="advanced_search_icon">advanced search icon</string>
 
     <string name="hashtag">#</string>
@@ -29,4 +28,16 @@
     <string name="delayed">Delayed</string>
     <string name="cancelled">Cancelled</string>
 
+    <string name="safe_travels">We wish you safe travels.</string>
+    <string name="one_line_summary_on_time">Flight #%s to %s looks good to go.</string>
+    <string name="one_line_summary_delayed">Flight #%s to %s looks to be delayed.</string>
+    <string name="one_line_summary_cancelled">Flight #%s to %s has unfortunately been cancelled.</string>
+    <string name="more_information">More information</string>
+
+    <string name="very_high_flight_score">Very high chance that your flight is on time.</string>
+    <string name="high_flight_score">High chance that your flight is on time.</string>
+    <string name="low_flight_score">Expect possible flight delays.</string>
+    <string name="cancelled_flight_score">This flight has been cancelled.</string>
+    <string name="no_flight_score">Sorry, we couldn\'t not find a flight rating.</string>
+    <string name="swoopair_we_wanttofly_bunch_of_cancellations_and_delays_here">\@SwoopAir we #WantToFly, bunch of cancellations and delays here</string>
 </resources>

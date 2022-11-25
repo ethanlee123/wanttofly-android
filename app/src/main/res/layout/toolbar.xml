@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flight_details_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,9 +14,11 @@
         android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="textStart"
         android:textColor="@color/white"
-        android:textSize="35sp"
-        android:text="Seattle"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        tools:text="Some Really Long Airport Name"/>
 
 </androidx.appcompat.widget.Toolbar>

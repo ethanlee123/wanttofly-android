@@ -1,6 +1,5 @@
 package com.example.wanttofly.search;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,6 +16,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,14 +27,38 @@ import io.reactivex.subscribers.DisposableSubscriber;
 public class SearchViewModel extends ViewModel {
     private final SearchRepository repository = new SearchRepository();
 
-    private SearchTrie searchTrie = new SearchTrie();
+    private final SearchTrie searchTrie = new SearchTrie();
 
     // List of all flights initially queried
     // We are using this variable to store all flights and when we sort we are filtering from
     // this list due to API limitations.
     private final MutableLiveData<List<FlightSummaryData>> trendingFlights = new MutableLiveData<>();
     private final MutableLiveData<List<FlightSummaryData>> searchedFlights = new MutableLiveData<>();
-    private FlightStatusCheck sortOptions = new FlightStatusCheck();
+    private final MutableLiveData<Queue<FlightSummaryData>> recentSearches = new MutableLiveData<>(new LinkedList<>());
+    private final FlightStatusCheck sortOptions = new FlightStatusCheck();
+
+    public LiveData<Queue<FlightSummaryData>> getRecentsSearchesObservable() {
+        return this.recentSearches;
+    }
+
+    public Queue<FlightSummaryData> getRecentSearches() {
+        return this.recentSearches.getValue();
+    }
+
+    public void addToRecentsQueue(FlightSummaryData flightData) {
+        Queue<FlightSummaryData> newRecents = new LinkedList<>(
+                Objects.requireNonNull(this.recentSearches.getValue())
+        );
+
+        if (newRecents.size() >= 3) {
+            newRecents.poll();
+        }
+
+        if (!recentSearches.getValue().contains(flightData)) {
+            newRecents.add(flightData);
+            this.recentSearches.setValue(newRecents);
+        }
+    }
 
     public FlightStatusCheck getSortOptions() {
         return this.sortOptions;

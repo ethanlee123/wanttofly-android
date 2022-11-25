@@ -3,12 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="300dp"
     android:background="@drawable/bg_flight_summary_view"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:padding="@dimen/flight_details_card_padding"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <TextView
@@ -34,15 +30,14 @@
         android:minHeight="40dp"
         android:src="@drawable/ic_more_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="65dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/temp_pie_chart_img"/>
+        android:contentDescription="@string/more_information" />
+
+    <com.anychart.AnyChartView
+        android:id="@+id/any_chart_view"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintTop_toBottomOf="@id/dt_heading"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

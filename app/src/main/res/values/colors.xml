@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="donut_chart_main">#FE6DA8</color>
+    <color name="donut_chart_fill">#56B7F1</color>
+
 <!--    gray scale-->
     <color name="gray_50">#FAFAFA</color>
     <color name="gray_100">#f5f5f5</color>
@@ -29,4 +32,9 @@
     <color name="blue_600">#036280</color>
     <color name="blue_400">#378ba4</color>
     <color name="blue_200">#81bece</color>
+
+<!--    Flight status background-->
+    <color name="green">#6EBF67</color>
+    <color name="yellow">#FEB019</color>
+    <color name="red">#FF0000</color>
 </resources>

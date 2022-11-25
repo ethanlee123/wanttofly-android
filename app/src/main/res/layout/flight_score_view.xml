@@ -2,11 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_flight_summary_view"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
+    android:background="@drawable/bg_flight_summary_alternate_view"
+    android:padding="@dimen/flight_details_card_padding"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -18,10 +15,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <org.eazegraph.lib.charts.PieChart
-            android:id="@+id/pie_chart"
+            android:id="@+id/donut_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:egInnerPaddingColor="@color/gray_850"
+            app:egInnerPaddingColor="@color/gray_900"
             app:egInnerValueColor="@color/white_200"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -37,30 +34,32 @@
 
     </RelativeLayout>
 
-
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:textSize="14sp"
-        android:text="Very High chance of being on time."
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/rl_container"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dt_info_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Very High chance of being on time."/>
 
     <ImageButton
         android:id="@+id/dt_info_button"
         android:layout_width="25dp"
         android:layout_height="30dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/bg_flight_summary_view"
+        android:background="@drawable/bg_flight_summary_alternate_view"
         android:minWidth="40dp"
         android:minHeight="40dp"
         android:src="@drawable/ic_more_info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/more_information" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
