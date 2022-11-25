@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -22,11 +29,17 @@ import com.example.wanttofly.search.FlightStatusCheck;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class FlightDetails extends AppCompatActivity {
@@ -34,12 +47,39 @@ public class FlightDetails extends AppCompatActivity {
     private static final String ARG_2 = "ARG_2";
     private static final String ARG_3 = "ARG_3";
     private static final String ARG_4 = "ARG_4";
+    public static ArrayList<Double> coordinates = new ArrayList<>();
+    public static JSONObject WeatherDetailsJSON;
+    public final String API_ID = "0c055f9eaeb4a4cafe6674f844721b36";
+    public final String GEOLOCATION_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct";
+    public final String WEATHER_BASE_URL = "https://api.open-meteo.com/v1/forecast";
+
+    /**
+     * To Be Modifies to get weather icons.
+     */
+    private static final Map<Integer, String> WEAHTER_LOGOS = new HashMap<Integer, String>()
+    {
+        {
+            put(2, "twenty");
+            put(3, "thirty");
+            put(4, "forty");
+            put(5, "fifty");
+            put(6, "sixty");
+            put(7, "seventy");
+            put(8, "eighty");
+            put(9, "ninety");
+        };
+    };
 
     Toolbar myToolbar;
     TextView toolbarTitle;
     TextView flightSummaryInLine;
     TextView recentTweets;
     View twitterView;
+
+    TextView destTemp;
+    TextView destTempRange;
+    TextView destAirport;
+    TextView destWindSpeed;
 
     // Do not modify
     private String arrivalAirport;
@@ -63,7 +103,132 @@ public class FlightDetails extends AppCompatActivity {
         setupFlightRatingCard();
         setupPieChartCard();
         setupTwitterSentimentsCard();
+
+        this.arrivalAirport = this.arrivalAirport.replace(" Airport", "");
+        this.arrivalAirport = this.arrivalAirport.replace(" International", "");
+        this.arrivalAirport = this.arrivalAirport.trim();
+
+        fetchAirportCoordinates(this.arrivalAirport);
     }
+
+    /**
+     * Fetches the coordinates (longitude and latitude) for the destination Airport.
+     * @param airportAddress String, destination airport address
+     *
+     * API call syntax:
+     * http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+     *
+     */
+    private void fetchAirportCoordinates(String airportAddress) {
+        System.out.println("Destination Airport Address: " + airportAddress);
+
+        String APIQuery = "?q=" + airportAddress + "&limit=1&appid=" + API_ID;
+
+        String LocationAPIRequestURL = GEOLOCATION_BASE_URL + APIQuery;
+        AsyncTaskForLocation runner = new AsyncTaskForLocation();
+        runner.execute(LocationAPIRequestURL);
+    }
+
+    public class AsyncTaskForLocation extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            coordinates.clear();
+            RequestQueue queue = Volley.newRequestQueue(FlightDetails.this);
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, strings[0], null, response -> {
+                try {
+                    if (response.length() == 0) {
+                        coordinates.add(-123.113952);
+                        coordinates.add(49.2608724);
+                        fetchWeatherDetails(coordinates);
+                    } else {
+                        JSONObject cityCoordinates = response.getJSONObject(0);;
+                        double longitude = cityCoordinates.getDouble("lon");
+                        double latitude = cityCoordinates.getDouble("lat");
+                        coordinates.add(longitude);
+                        coordinates.add(latitude);
+                        fetchWeatherDetails(coordinates);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> System.out.println("Error occurred in getting the object: " + error));
+            queue.add(request);
+
+            return null;
+        }
+    }
+
+    /**
+     * Fetches the weather details from
+     * open-mateo API for the coordinates passed into the parameters.
+     * @param coordinates, [longitude, latitude]
+     */
+    private void fetchWeatherDetails(ArrayList<Double> coordinates) {
+        double longitude = coordinates.get(0);
+        double latitude = coordinates.get(1);
+        String suffix = "&timezone=auto&hourly=temperature_2m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=True";
+        String coord = "?latitude=" + latitude + "&longitude=" + longitude;
+        String weatherAPIRequestURL = WEATHER_BASE_URL + coord + suffix;
+
+        AsyncTaskForWeather runner = new AsyncTaskForWeather();
+        runner.execute(weatherAPIRequestURL);
+    }
+
+    public class AsyncTaskForWeather extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            RequestQueue queue = Volley.newRequestQueue(FlightDetails.this);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
+                try {
+                    WeatherDetailsJSON = response;
+                    displayWeatherDetails();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> System.out.println("Error occurred in getting the object: " + error));
+            queue.add(request);
+            return null;
+        }
+    }
+
+
+    private void displayWeatherDetails() throws JSONException {
+
+        try {
+            JSONObject currentWeather = WeatherDetailsJSON.getJSONObject("current_weather");
+            JSONObject hourlyData = WeatherDetailsJSON.getJSONObject("hourly");
+            JSONObject dailyData= WeatherDetailsJSON.getJSONObject("daily");
+
+            int weatherCode = currentWeather.getInt("weathercode");
+
+
+            destAirport = findViewById(R.id.wth_city);
+            destAirport.setText(this.arrivalAirport);
+
+            destWindSpeed = findViewById(R.id.wth_windspeed);
+            String WindSpeed = currentWeather.getDouble("windspeed") + " kmh";
+            destWindSpeed.setText(WindSpeed);
+
+            destTemp = findViewById(R.id.wth_current_temperature);
+            String temperatureString = currentWeather.getDouble("temperature") + "°C";
+            destTemp.setText(temperatureString);
+
+            destTempRange = findViewById(R.id.wth_high_low_temp);
+            JSONArray dailyMaxTemp = dailyData.getJSONArray("temperature_2m_max");
+            JSONArray dailyMinTemp = dailyData.getJSONArray("temperature_2m_min");
+
+            String tempRangeString = "H: " + dailyMaxTemp.optDouble(0) + "° L: " + dailyMinTemp.optDouble(0) + "°";
+            destTempRange.setText(tempRangeString);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void setupTwitterSentimentsCard() {
         recentTweets = findViewById(R.id.dt_twitter_info);
