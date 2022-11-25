@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
+import com.example.wanttofly.BuildConfig;
 import com.example.wanttofly.R;
 import com.example.wanttofly.search.FlightStatusCheck;
 
@@ -49,24 +51,45 @@ public class FlightDetails extends AppCompatActivity {
     private static final String ARG_4 = "ARG_4";
     public static ArrayList<Double> coordinates = new ArrayList<>();
     public static JSONObject WeatherDetailsJSON;
-    public final String API_ID = "0c055f9eaeb4a4cafe6674f844721b36";
+    public final String API_ID = BuildConfig.OPEN_WEATHER_API_KEY;
     public final String GEOLOCATION_BASE_URL = "https://api.openweathermap.org/geo/1.0/direct";
     public final String WEATHER_BASE_URL = "https://api.open-meteo.com/v1/forecast";
 
     /**
      * To Be Modifies to get weather icons.
      */
-    private static final Map<Integer, String> WEAHTER_LOGOS = new HashMap<Integer, String>()
+    private static final Map<Integer, Integer> WEAHTER_ICONS = new HashMap<Integer, Integer>()
     {
         {
-            put(2, "twenty");
-            put(3, "thirty");
-            put(4, "forty");
-            put(5, "fifty");
-            put(6, "sixty");
-            put(7, "seventy");
-            put(8, "eighty");
-            put(9, "ninety");
+            put(0, R.drawable.wi_sunny);
+            put(1, R.drawable.wi_sunny);
+            put(2, R.drawable.wi_sunny);
+            put(3, R.drawable.wi_cloudy);
+            put(45, R.drawable.wi_cloudy);
+            put(48, R.drawable.wi_cloudy);
+            put(51, R.drawable.wi_rainshower);
+            put(53, R.drawable.wi_rainshower);
+            put(55, R.drawable.wi_rainshower);
+            put(56, R.drawable.ic_snowyrainy);
+            put(57, R.drawable.ic_snowyrainy);
+            put(61, R.drawable.wi_rainy);
+            put(63, R.drawable.wi_rainy);
+            put(65, R.drawable.wi_rainy);
+            put(66, R.drawable.ic_snowyrainy);
+            put(67, R.drawable.ic_snowyrainy);
+            put(71, R.drawable.ic_snowy);
+            put(73, R.drawable.ic_heavysnow);
+            put(75, R.drawable.ic_heavysnow);
+            put(77, R.drawable.ic_heavysnow);
+            put(80, R.drawable.wi_rainshower);
+            put(81, R.drawable.wi_rainshower);
+            put(82, R.drawable.wi_rainshower);
+            put(85, R.drawable.ic_snowy);
+            put(86, R.drawable.ic_snowy);
+            put(95, R.drawable.wi_thunder);
+            put(96, R.drawable.wi_rainythunder);
+            put(99, R.drawable.wi_rainythunder);
+
         };
     };
 
@@ -80,6 +103,8 @@ public class FlightDetails extends AppCompatActivity {
     TextView destTempRange;
     TextView destAirport;
     TextView destWindSpeed;
+    ImageView weatherIcon;
+    TextView destPrecipitation;
 
     // Do not modify
     private String arrivalAirport;
@@ -152,9 +177,13 @@ public class FlightDetails extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }, error -> System.out.println("Error occurred in getting the object: " + error));
+            }, error -> {
+                coordinates.add(-123.113952);
+                coordinates.add(49.2608724);
+                fetchWeatherDetails(coordinates);
+                System.out.println("Error occurred in getting the object: " + error);
+            });
             queue.add(request);
-
             return null;
         }
     }
@@ -167,7 +196,7 @@ public class FlightDetails extends AppCompatActivity {
     private void fetchWeatherDetails(ArrayList<Double> coordinates) {
         double longitude = coordinates.get(0);
         double latitude = coordinates.get(1);
-        String suffix = "&timezone=auto&hourly=temperature_2m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&current_weather=True";
+        String suffix = "&timezone=auto&hourly=temperature_2m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum&current_weather=True";
         String coord = "?latitude=" + latitude + "&longitude=" + longitude;
         String weatherAPIRequestURL = WEATHER_BASE_URL + coord + suffix;
 
@@ -196,12 +225,19 @@ public class FlightDetails extends AppCompatActivity {
 
     private void displayWeatherDetails() throws JSONException {
 
+        System.out.println("DEFAULT: " + WeatherDetailsJSON);
         try {
             JSONObject currentWeather = WeatherDetailsJSON.getJSONObject("current_weather");
             JSONObject hourlyData = WeatherDetailsJSON.getJSONObject("hourly");
             JSONObject dailyData= WeatherDetailsJSON.getJSONObject("daily");
 
             int weatherCode = currentWeather.getInt("weathercode");
+            weatherIcon = findViewById(R.id.wth_logo);
+            int drawableID = R.drawable.wi_cloudy;
+            if (WEAHTER_ICONS.get(weatherCode) != null) {
+                drawableID = WEAHTER_ICONS.get(weatherCode);
+            }
+            weatherIcon.setImageResource(drawableID);
 
 
             destAirport = findViewById(R.id.wth_city);
@@ -211,8 +247,14 @@ public class FlightDetails extends AppCompatActivity {
             String WindSpeed = currentWeather.getDouble("windspeed") + " kmh";
             destWindSpeed.setText(WindSpeed);
 
+            destPrecipitation = findViewById(R.id.wth_precipitation);
+            JSONArray dailyPrecipitation = dailyData.getJSONArray("precipitation_sum");
+            String precipitation = dailyPrecipitation.optDouble(0) + " mm";
+            destPrecipitation.setText(precipitation);
+
+
             destTemp = findViewById(R.id.wth_current_temperature);
-            String temperatureString = currentWeather.getDouble("temperature") + "°C";
+            String temperatureString = currentWeather.getDouble("temperature") + "°";
             destTemp.setText(temperatureString);
 
             destTempRange = findViewById(R.id.wth_high_low_temp);
