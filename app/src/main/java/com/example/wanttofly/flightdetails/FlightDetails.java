@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -128,12 +127,34 @@ public class FlightDetails extends AppCompatActivity {
         setupFlightRatingCard();
         setupPieChartCard();
         setupTwitterSentimentsCard();
+        setupFlightRatingInfoButton();
+        setupDelayAndCancellationInfoButton();
 
         this.arrivalAirport = this.arrivalAirport.replace(" Airport", "");
         this.arrivalAirport = this.arrivalAirport.replace(" International", "");
         this.arrivalAirport = this.arrivalAirport.trim();
 
         fetchAirportCoordinates(this.arrivalAirport);
+    }
+
+    private void setupDelayAndCancellationInfoButton() {
+        ImageButton infoButton = findViewById(R.id.delay_cancel_info_button);
+        infoButton.setOnClickListener(view -> {
+            DelayAndCancelBottomSheetFragment fragment =
+                    new DelayAndCancelBottomSheetFragment();
+            fragment.show(getSupportFragmentManager(),
+                    DelayAndCancelBottomSheetFragment.TAG);
+        });
+    }
+
+    private void setupFlightRatingInfoButton() {
+        ImageButton infoButton = findViewById(R.id.flight_rating_info_button);
+        infoButton.setOnClickListener(view -> {
+            FlightRatingInfoBottomSheetFragment fragment =
+                    new FlightRatingInfoBottomSheetFragment();
+            fragment.show(getSupportFragmentManager(),
+                    FlightRatingInfoBottomSheetFragment.TAG);
+        });
     }
 
     /**

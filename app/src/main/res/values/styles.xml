@@ -30,6 +30,13 @@
         <item name="android:letterSpacing">0.02</item>
     </style>
 
+    <style name="body_1" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/white_200</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="text_button_1" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white_200</item>
         <item name="android:fontFamily">@font/lato_bold</item>

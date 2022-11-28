@@ -40,4 +40,7 @@
     <string name="cancelled_flight_score">This flight has been cancelled.</string>
     <string name="no_flight_score">Sorry, we couldn\'t not find a flight rating.</string>
     <string name="swoopair_we_wanttofly_bunch_of_cancellations_and_delays_here">\@SwoopAir we #WantToFly, bunch of cancellations and delays here</string>
+
+    <string name="flight_rating_info">The flight rating score you see inside the donut chart is calculated based on our proprietary prediction model.</string>
+    <string name="delay_cancel_info">The pie chart provides information regarding the probability of this flight being \'on time\', \'delayed\', or \'cancelled\'.</string>
 </resources>
