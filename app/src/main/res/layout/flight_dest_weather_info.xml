@@ -35,12 +35,12 @@
         android:layout_width="185dp"
         android:layout_height="130dp"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toStartOf="@id/flight_rating_info_button"
+        app:layout_constraintEnd_toStartOf="@id/flight_weather_info_button"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/wi_rainy" />
 
     <ImageButton
-        android:id="@+id/flight_rating_info_button"
+        android:id="@+id/flight_weather_info_button"
         android:layout_width="25dp"
         android:layout_height="30dp"
         android:layout_marginEnd="4dp"

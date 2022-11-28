@@ -29,9 +29,9 @@
     <string name="cancelled">Cancelled</string>
 
     <string name="safe_travels">We wish you safe travels.</string>
-    <string name="one_line_summary_on_time">Flight #%s to %s looks good to go.</string>
-    <string name="one_line_summary_delayed">Flight #%s to %s looks to be delayed.</string>
-    <string name="one_line_summary_cancelled">Flight #%s to %s has unfortunately been cancelled.</string>
+    <string name="one_line_summary_on_time">Flight #%s to \n%s \nlooks good to go.</string>
+    <string name="one_line_summary_delayed">Flight #%s to \n%s \nlooks to be delayed.</string>
+    <string name="one_line_summary_cancelled">Flight #%s \nto %s \nhas unfortunately been cancelled.</string>
     <string name="more_information">More information</string>
 
     <string name="very_high_flight_score">Very high chance that your flight is on time.</string>
@@ -42,5 +42,6 @@
     <string name="swoopair_we_wanttofly_bunch_of_cancellations_and_delays_here">\@SwoopAir we #WantToFly, bunch of cancellations and delays here</string>
 
     <string name="flight_rating_info">The flight rating score you see inside the donut chart is calculated based on our proprietary prediction model.</string>
+    <string name="flight_weather_info">The weather info field provides information regarding the destination weather details which includes:\nCurrent Temperature\nMax and Min Temperature\nWind Speed\nPrecipitation</string>
     <string name="delay_cancel_info">The pie chart provides information regarding the probability of this flight being \'on time\', \'delayed\', or \'cancelled\'.</string>
 </resources>
