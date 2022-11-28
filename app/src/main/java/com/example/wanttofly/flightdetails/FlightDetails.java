@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -128,12 +127,45 @@ public class FlightDetails extends AppCompatActivity {
         setupFlightRatingCard();
         setupPieChartCard();
         setupTwitterSentimentsCard();
+        setupFlightRatingInfoButton();
+        setupDelayAndCancellationInfoButton();
+        setupFlightWeatherInfoButton();
 
         this.arrivalAirport = this.arrivalAirport.replace(" Airport", "");
         this.arrivalAirport = this.arrivalAirport.replace(" International", "");
         this.arrivalAirport = this.arrivalAirport.trim();
 
         fetchAirportCoordinates(this.arrivalAirport);
+    }
+
+    private void setupDelayAndCancellationInfoButton() {
+        ImageButton infoButton = findViewById(R.id.delay_cancel_info_button);
+        infoButton.setOnClickListener(view -> {
+            DelayAndCancelBottomSheetFragment fragment =
+                    new DelayAndCancelBottomSheetFragment();
+            fragment.show(getSupportFragmentManager(),
+                    DelayAndCancelBottomSheetFragment.TAG);
+        });
+    }
+
+    private void setupFlightRatingInfoButton() {
+        ImageButton infoButton = findViewById(R.id.flight_rating_info_button);
+        infoButton.setOnClickListener(view -> {
+            FlightRatingInfoBottomSheetFragment fragment =
+                    new FlightRatingInfoBottomSheetFragment();
+            fragment.show(getSupportFragmentManager(),
+                    FlightRatingInfoBottomSheetFragment.TAG);
+        });
+    }
+
+    private void setupFlightWeatherInfoButton() {
+        ImageButton infoButton = findViewById(R.id.flight_weather_info_button);
+        infoButton.setOnClickListener(view -> {
+            FlightWeatherInfoBottomSheetFragment fragment =
+                    new FlightWeatherInfoBottomSheetFragment();
+            fragment.show(getSupportFragmentManager(),
+                    FlightWeatherInfoBottomSheetFragment.TAG);
+        });
     }
 
     /**
@@ -234,9 +266,14 @@ public class FlightDetails extends AppCompatActivity {
             int weatherCode = currentWeather.getInt("weathercode");
             weatherIcon = findViewById(R.id.wth_logo);
             int drawableID = R.drawable.wi_cloudy;
-            if (WEAHTER_ICONS.get(weatherCode) != null) {
-                drawableID = WEAHTER_ICONS.get(weatherCode);
+            try {
+                if (WEAHTER_ICONS.get(weatherCode) != null) {
+                    drawableID = WEAHTER_ICONS.get(weatherCode);
+                }
+            } catch (NullPointerException exception) {
+                System.out.println("Error occurred in mapping the the weather code to Icon.");
             }
+
             weatherIcon.setImageResource(drawableID);
 
 
@@ -244,14 +281,13 @@ public class FlightDetails extends AppCompatActivity {
             destAirport.setText(this.arrivalAirport);
 
             destWindSpeed = findViewById(R.id.wth_windspeed);
-            String WindSpeed = currentWeather.getDouble("windspeed") + " kmh";
+            String WindSpeed = currentWeather.getDouble("windspeed") + " km/h";
             destWindSpeed.setText(WindSpeed);
 
             destPrecipitation = findViewById(R.id.wth_precipitation);
             JSONArray dailyPrecipitation = dailyData.getJSONArray("precipitation_sum");
             String precipitation = dailyPrecipitation.optDouble(0) + " mm";
             destPrecipitation.setText(precipitation);
-
 
             destTemp = findViewById(R.id.wth_current_temperature);
             String temperatureString = currentWeather.getDouble("temperature") + "°";

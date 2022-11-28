@@ -19,21 +19,8 @@
         android:maxLines="3"
         app:layout_constraintBottom_toTopOf="@id/dt_date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/dt_info_button"
+        app:layout_constraintEnd_toEndOf="@id/dt_date"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/dt_info_button"
-        android:layout_width="25dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="4dp"
-        android:background="@drawable/bg_flight_summary_alternate_view"
-        android:minWidth="40dp"
-        android:minHeight="40dp"
-        android:src="@drawable/ic_more_info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/more_information" />
 
     <TextView
         android:id="@+id/dt_date"

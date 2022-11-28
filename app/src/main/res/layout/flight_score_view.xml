@@ -45,12 +45,12 @@
         android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/rl_container"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/dt_info_button"
+        app:layout_constraintEnd_toStartOf="@id/flight_rating_info_button"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Very High chance of being on time."/>
 
     <ImageButton
-        android:id="@+id/dt_info_button"
+        android:id="@+id/flight_rating_info_button"
         android:layout_width="25dp"
         android:layout_height="30dp"
         android:layout_marginEnd="4dp"
