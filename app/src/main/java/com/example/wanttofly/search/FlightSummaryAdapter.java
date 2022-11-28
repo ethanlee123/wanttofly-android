@@ -88,7 +88,8 @@ public class FlightSummaryAdapter extends RecyclerView.Adapter<FlightSummaryAdap
         holder.flightRating.setText(String.valueOf(flightRating));
 
         holder.airline.setText(flightSummariesList.get(position).getAirlineName());
-        holder.destination.setText(flightSummariesList.get(position).getArrivalAirport());
+        String arrivalAirport = "to " + flightSummariesList.get(position).getArrivalAirport();
+        holder.destination.setText(arrivalAirport);
         String flightNum = context.getString(R.string.hashtag)
                 + flightSummariesList.get(position).getFlightNumber();
         holder.flightNumber.setText(flightNum);

@@ -56,23 +56,30 @@
 
     <TextView
         android:id="@+id/tv_airline"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/rl_container"
         app:layout_constraintBottom_toTopOf="@id/tv_destination"
+        app:layout_constraintEnd_toEndOf="parent"
+
         tools:text="American Airlines"/>
 
     <TextView
         android:id="@+id/tv_destination"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="5dp"
         android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/rl_container"
         app:layout_constraintBottom_toBottomOf="@id/rl_container"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="to Seattle"/>
 
     <TextView
